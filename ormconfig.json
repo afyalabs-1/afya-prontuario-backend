@@ -5,10 +5,12 @@
   "username": "postgres",
   "password": "root",
   "database": "afya_db",
-  "logging": false,
+  "logging": true,
   "entities": ["./src/models/**.ts"],
   "migrations": ["./src/database/migrations/**.ts"],
   "cli": {
     "migrationsDir": "./src/database/migrations"
-  }
+  },
+	"synchronize": true,
+	"timezone": "utc"
 }
