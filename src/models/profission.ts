@@ -2,15 +2,17 @@ import {
 	IsString,
 	Length
 } from 'class-validator';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 import { BaseEntity } from '../_commons/base_entity';
+import { Specialist } from './specialist';
 
 @Entity()
 export class Profession extends BaseEntity<Profession> {
-
 	@IsString({ always: true })
 	@Length(3, 100, { always: true })
 	@Column({ type: 'varchar', nullable: false })
 	name: string;
 
+	@OneToMany(() => Specialist, specialist => specialist.id)
+	specialist: Specialist;
 }
