@@ -10,9 +10,9 @@ Você vai precisar gerenciar o banco de dados, caso não tenha ferramenta pra is
 https://dbeaver.io/
 
 Se tiver duvidas de como executar fazer as conexões me chama que eu auxilio.
-## Para iniciar a aplicação:
+## Para iniciar a plicação:
 
-**IMPORTANTE**: Execute os códigos abaixo em sequencia.
+**IMPORTANTE**: Execute os codigos abaixo em sequencia.
 
 Para instalar as dependências:
 
@@ -20,9 +20,9 @@ Para instalar as dependências:
 
 Para começar o desenvolvimento execute o comando a seguir, irá demorar um pouco, esse comando vai buildar todo projeto, criar um container postgres e rodar o servidor.
 
-     docker-compose up
+     docker-compose up      
 
-O comando acima só precisa ser rodado uma vez, para as próximas vezes, basta rodar:
+O comando acima só precisa ser rodado uma vez, para as proximas vezes, basta rodar:
 
     yarn dev
 
@@ -30,4 +30,4 @@ O comando acima só precisa ser rodado uma vez, para as próximas vezes, basta r
 
     Server's running!⚡⚡⚡
 
-Consulte o banco de dados, verifique se foi incluído uma nova tabela de `Client`
+Consulte o banco de dados, verifique se foi includo uma nova tabela de `Client`
