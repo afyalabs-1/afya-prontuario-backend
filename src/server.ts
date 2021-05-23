@@ -5,6 +5,6 @@ import './database';
 
 dotenv.config();
 
-app.listen(process.env.PORT || 3000, () => {
-	console.log(`Server's running on port ${process.env.API_PORT}!⚡⚡⚡`);
+app.listen(process.env.PORT || 3333, () => {
+  console.log(`Server's running on port ${process.env.API_PORT}!⚡⚡⚡`);
 });

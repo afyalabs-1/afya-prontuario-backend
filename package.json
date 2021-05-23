@@ -10,7 +10,7 @@
     "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/server.ts",
     "typeorm": "ts-node-dev node_modules/typeorm/cli.js",
     "start": "node dist/server.js",
-		"start:docker:dev": "npm install && npm run dev"
+    "start:docker:dev": "npm install && npm run dev"
   },
   "devDependencies": {
     "@types/express": "^4.17.11",
@@ -39,9 +39,9 @@
     "pg": "^8.6.0",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.2.32",
-		"typeorm-encrypted": "^0.5.6",
-    "uuidv4": "^6.0.7",
+    "typeorm-encrypted": "^0.5.6",
     "uuid": "^8.3.2",
+    "uuidv4": "^6.0.7",
     "validator": "^13.6.0"
   }
 }
