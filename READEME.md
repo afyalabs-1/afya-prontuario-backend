@@ -1,34 +1,28 @@
 # Instruções de Uso
 
-
 ## Docker
-Primeiro crie uma imagem do Postgres no Docker
+Caso não tenha o docker compose, instale pela linha de comando a seguir:
 
-     docker pull postgres
-
-   Comando para criar o container
- 
-     docker run --name postgres -e POSTGRES_PASSWORD=root -p 5432:5432 -d postgres
+    sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
 Você vai precisar gerenciar o banco de dados, caso não tenha ferramenta pra isso, eu indico o DBeaver, é bem simples de usar
 
 https://dbeaver.io/
 
 Se tiver duvidas de como executar fazer as conexões me chama que eu auxilio.
+## Para iniciar a aplicação:
 
-O docker não cria o banco de dados sozinho, então é necessário fazer isso manualmente. Crie um novo banco de dados com o nome de `afya_db`
-
-## Para iniciar a plicação:
-
-**IMPORTANTE**: Execute os codigos abaixo em sequencia.
+**IMPORTANTE**: Execute os códigos abaixo em sequencia.
 
 Para instalar as dependências:
 
     yarn
 
-Não será necessário criar as migrations por enquanto, as próprias entitys farão isso por nos por enquanto.
+Para começar o desenvolvimento execute o comando a seguir, irá demorar um pouco, esse comando vai buildar todo projeto, criar um container postgres e rodar o servidor.
 
-Para rodar o projeto:
+     docker-compose up
+
+O comando acima só precisa ser rodado uma vez, para as próximas vezes, basta rodar:
 
     yarn dev
 
@@ -36,15 +30,4 @@ Para rodar o projeto:
 
     Server's running!⚡⚡⚡
 
-Consulte o banco de dados, verifique se foi includo uma nova tabela de `Client`
-
-## Processo de desenvolvimento
-
-Crie a entity conforme o exemplo já existente na pasta `Model`. Todas as classes serão criadas a partir da classe `BaseEntity`, na pasta `_commons`, portanto utilizar `extends` referenciando este arquivo, como no exemplo. Isso porque todas as tabelas terão ID, CreateDate e DeleteDate.
-
-Utilize os validators para estipular as características de cada coluna.
-
-## Duvidas
-
-Chamem a qualquer hora para tirar as duvidas, vou tentar acessar o mais rapido possivel pra auxiliar. Assim que eu for adicionando mais coisa, eu vou mundando aqui também, então sempre olhem aqui se foi alterado algo.
-
+Consulte o banco de dados, verifique se foi incluído uma nova tabela de `Client`
