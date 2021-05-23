@@ -1,5 +1,10 @@
+import dotenv from 'dotenv';
 import app from './app';
+import 'reflect-metadata';
+import './database';
 
-const PORT = 3333;
+dotenv.config();
 
-app.listen(PORT, () => console.log("Server's running!⚡⚡⚡"));
+app.listen(3333, () => {
+	console.log("Server's running!⚡⚡⚡");
+});

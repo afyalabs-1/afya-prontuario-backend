@@ -8,8 +8,8 @@ import {
 	IsUrl,
 	Length,
 } from 'class-validator';
-import { Column, Entity, ManyToOne } from 'typeorm';
-import { BaseEntity } from '../_commons/base_entity';
+import { Column, Entity } from 'typeorm';
+import { BaseEntity } from './base_entity';
 
 // export class UserStatus {
 // 	static readonly UNCONFIRMED_EMAIL = "UNCONFIRMED_EMAIL";
