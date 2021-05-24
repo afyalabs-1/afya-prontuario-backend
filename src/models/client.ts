@@ -26,7 +26,7 @@ export class Gender {
 }
 
 @Entity()
-export class Client<Client> {
+export class Client extends BaseEntity<Client> {
   @IsString({ always: true })
   @Length(14, 14, { always: true })
   @Column({ type: 'varchar', length: 14, nullable: false, unique: true })
