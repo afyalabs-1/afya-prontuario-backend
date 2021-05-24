@@ -5,7 +5,6 @@ import {
 import { Column, Entity, OneToMany } from 'typeorm';
 import { BaseEntity } from './base_entity';
 import { Specialists } from './specialists';
-
 @Entity()
 export class Profession extends BaseEntity<Profession> {
 	@IsString({ always: true })
