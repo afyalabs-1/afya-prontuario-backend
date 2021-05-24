@@ -23,3 +23,8 @@ yarn.lock
 .settings/
 *.sublime-workspace
 
+# Environment
+.env
+
+# Optional npm cache directory
+.npm
