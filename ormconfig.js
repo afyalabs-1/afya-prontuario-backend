@@ -5,6 +5,12 @@ module.exports = {
 	"migrations": [process.env.MIGRATIONS],
 	"entities": [process.env.ENTITIES],
 	"synchronize": process.env.DB_SYNC == "true",
+  "ssl": true,
+  "extra": {
+    "ssl": {
+      "rejectUnauthorized": false
+    }
+  },
 	"cli":{
 		"migrationsDir": [
 		"src/database/migrations/"
