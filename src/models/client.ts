@@ -25,7 +25,7 @@ export class Gender {
   static readonly OTHER = 'OTHER';
 }
 
-@Entity()
+@Entity('clients')
 export class Client extends BaseEntity<Client> {
   @IsString({ always: true })
   @Length(14, 14, { always: true })
