@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
-import { getCustomRepository } from 'typeorm';
+import { getCustomRepository, Like } from 'typeorm';
+import { AppError } from '../error/AppError';
 import { ClientsRepository } from '../repositories/ClientsRepository';
 
 class ClientsController {
@@ -17,6 +18,7 @@ class ClientsController {
     } = request.body;
 
     const clientsRepository = getCustomRepository(ClientsRepository);
+
     const addClient = clientsRepository.create({
       cpf: cpf,
       name: name,
@@ -30,6 +32,31 @@ class ClientsController {
     });
 
     return await clientsRepository.save(addClient);
+  }
+
+  async list(client: string) {
+    const clientsRepository = getCustomRepository(ClientsRepository);
+    let clientsList = null;
+
+    if (client) {
+      clientsList = await clientsRepository.find({
+        where: { name: Like(`%${client}%`) },
+        // relations: ['address'],
+      });
+    } else {
+      clientsList = await clientsRepository.find();
+      // clientsList = await clientsRepository.find({ relations: ['address'] });
+    }
+
+    if (!clientsList) {
+      throw new AppError(
+        500,
+        'Client not found!',
+        'Error > ClientsController > List',
+      );
+    } else {
+      return clientsList;
+    }
   }
 }
 
