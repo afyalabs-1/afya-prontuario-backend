@@ -28,3 +28,6 @@ yarn.lock
 
 # Optional npm cache directory
 .npm
+
+# orm-development
+ormconfig.js
