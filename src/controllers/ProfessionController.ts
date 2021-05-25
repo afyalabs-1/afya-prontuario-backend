@@ -11,7 +11,7 @@ class ProfessionController {
     }
     
     async read (request: Request, response: Request): Promise<Request> {
-        return await this.professionRepository.read();
+        return this.professionRepository.read();
     }
 
     async create (request: Request, response: Response): Promise<Response> {
@@ -54,3 +54,5 @@ class ProfessionController {
         }
     }
 }
+
+export { ProfessionController };
