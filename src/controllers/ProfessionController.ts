@@ -1,3 +1,4 @@
+import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
 import { ProfessionRepository } from '../repositories/ProfessionRepository';
 import { AppError } from '../error/AppError';
@@ -9,41 +10,47 @@ class ProfessionController {
         this.professionRepository = getCustomRepository(ProfessionRepository);
     }
     
-    async read () {
+    async read (request: Request, response: Request): Promise<Request> {
         return await this.professionRepository.read();
     }
 
-    async create (name: string) {
-        const professionAlreadyExists = await this.professionRepository.findOneFromName({ name });
+    async create (request: Request, response: Response): Promise<Response> {
+        const { name } = request.body;
+        const professionAlreadyExists = await this.professionRepository.findOneFromName({ where:(name) });
 
         if (professionAlreadyExists) {
-            throw new AppError(400, 'Profession already exists!', 'Error > ProfessionController > professionAlreadyExists');
+            return response.status(400).json({message: 'Profession already exists!'})
         } else {
             const addProfession = this.professionRepository.create({
                 name: name
             });
 
-            return await this.professionRepository.save(addProfession);
+            await this.professionRepository.save(addProfession);
+            return response.status(200).json({ message: 'Profession created.' });
         }
     }
 
-    async update (id: string, name: string) {
-        const professionAlreadyExists = await this.professionRepository.findOneFromId({ id });
+    async update (request: Request, response: Response): Promise<Response> {
+        const { id, name } = request.body;
+        const professionAlreadyExists = await this.professionRepository.findOneFromId({ where:(id) });
 
         if (professionAlreadyExists) {
-            throw new AppError(400, 'Profession already exists!', 'Error > ProfessionController > professionAlreadyExists');
+            return response.status(400).json({message: 'Profession already exists!'});
         } else {
-            return await this.professionRepository.update(id, name);
+            await this.professionRepository.update(id, name);
+            return response.status(200).json({ message: 'Profession updated.' });
         }
     }
 
-    async delete (id: string) {
-        const professionAlreadyExists = await this.professionRepository.findOneFromId({ id });
+    async delete (request: Request, response: Response): Promise<Response> {
+        const { id } = request.body;
+        const professionAlreadyExists = await this.professionRepository.findOneFromId({ where:(id) });
 
         if (professionAlreadyExists) {
-            throw new AppError(400, 'Profession already exists!', 'Error > ProfessionController > professionAlreadyExists');
+            return response.status(400).json({ message: 'Profession already exists!' });
         } else {
-            return await this.professionRepository.delete(id);
+            await this.professionRepository.delete(id);
+            return response.status(200).json({ message: 'Profession excluded.' });
         }
     }
 }
