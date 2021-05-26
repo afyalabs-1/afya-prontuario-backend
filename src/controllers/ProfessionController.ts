@@ -1,17 +1,23 @@
 import { Request, Response } from 'express';
-import { getCustomRepository } from 'typeorm';
+import { getCustomRepository, Like } from 'typeorm';
 import { ProfessionRepository } from '../repositories/ProfessionRepository';
 import { AppError } from '../error/AppError';
 
 class ProfessionController {
-    professionRepository: object;
 
-    constructor () {
-        this.professionRepository = getCustomRepository(ProfessionRepository);
-    }
-    
-    async read (request: Request, response: Request): Promise<Request> {
-        return this.professionRepository.read();
+    async list(profession: string) {
+        const professionRepository = getCustomRepository(ProfessionRepository);
+        let professionList = null;
+        return "lista de profissões";
+        /* if (profession) {
+            professionList = await professionRepository.find({
+                where: { name: Like(`%${profession}%`) }
+            });
+        } else {
+            professionList = await professionRepository.find({
+
+            });
+        } */
     }
 
     async create (request: Request, response: Response): Promise<Response> {

@@ -1,12 +1,17 @@
-import { Router } from 'express';
+import { Request, Response, Router } from 'express';
 import { ProfessionController } from '../controllers/ProfessionController'
+import { ProfessionRepository } from '../repositories/ProfessionRepository';
 
-const router = Router();
+const professionRouter = Router();
+const professionController = new ProfessionController();
 
-router.get('/read-profissao', ProfessionController.read);
-router.get('/create-profissao', ProfessionController.create);
-router.get('/update-profissao', ProfessionController.update);
-router.get('/delete-profissao', ProfessionController.delete);
 
-export { router };
-
+professionRouter.get('/profession-list', async (request: Request, response: Response) => {
+    try {
+        const profession = (request.query as any).profession;
+        const professionList = await professionController.list(profession);
+        return response.status(200).json(professionList);
+    } catch (err) {
+        console.log('err.message:>> ', err.message);
+    }
+})
