@@ -1,13 +1,8 @@
-import {
-  IsEnum,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  Length,
-} from 'class-validator';
+import { IsEnum, IsOptional, IsString, Length } from 'class-validator';
+import { Column, Entity, JoinColumn, OneToMany } from 'typeorm';
 
-import { Column, Entity, JoinColumn, OneToMany, OneToOne } from 'typeorm';
-
+import { IsBrPostalCode } from '../_common/is_br_postal';
+import { IsBrState } from '../_common/is_br_state';
 import { BaseEntity } from './base_entity';
 import { Client } from './client';
 
@@ -48,14 +43,15 @@ export class Address extends BaseEntity<Address> {
   @Column({ nullable: false })
   city: string;
 
-  // @IsBrState({ always: true })
+  @IsBrState({ always: true })
   @Column({ nullable: false })
   state: string;
 
-  // @IsBrPostalCode({ always: true })
+  @IsBrPostalCode({ always: true })
   @Column({ nullable: false })
   postalCode: string;
 
   @OneToMany(type => Client, client => client.address, { onDelete: 'CASCADE' })
+  @JoinColumn()
   client: Client;
 }

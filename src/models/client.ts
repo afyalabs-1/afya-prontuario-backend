@@ -8,6 +8,10 @@ import {
   IsUrl,
   Length,
 } from 'class-validator';
+
+import { IsBrPhone } from '../_common/is_br_phone';
+import { IsCPF } from '../_common/is_cpf';
+
 import { Column, Entity, ManyToOne } from 'typeorm';
 import { Address } from './address';
 import { BaseEntity } from './base_entity';
@@ -33,6 +37,7 @@ export class BloodTypes {
 export class Client extends BaseEntity<Client> {
   @IsString({ always: true })
   @Length(14, 14, { always: true })
+  @IsCPF({ always: true })
   @Column({ type: 'varchar', length: 14, nullable: false, unique: true })
   cpf: string;
 
@@ -45,10 +50,12 @@ export class Client extends BaseEntity<Client> {
   @Column({ type: 'varchar', length: 255, nullable: false, unique: true })
   email: string;
 
+  @IsBrPhone({ always: true })
   @IsString({ always: true })
   @Column({ type: 'varchar', length: 15, nullable: false })
   phoneNumber: string;
 
+  @IsBrPhone({ always: true })
   @IsString({ always: true })
   @Column({ type: 'varchar', length: 15, nullable: false })
   cellPhone: string;
