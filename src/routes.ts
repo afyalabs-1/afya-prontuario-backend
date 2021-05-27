@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { attendanceRouter } from './routes/AttendanceRouter';
+import { professionRouter } from './routes/professionRoute';
 
 const router = Router();
 
@@ -8,5 +9,6 @@ router.get('/', (request, response) => {
 });
 
 router.use('./attendances', attendanceRouter);
+router.use('/professions', professionRouter);
 
 export { router };
