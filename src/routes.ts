@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { attendanceRouter } from './routes/AttendanceRouter';
-import { professionRouter } from './routes/professionRoute';
+import { professionRouter } from './routes/ProfessionRouter';
 
 const router = Router();
 
