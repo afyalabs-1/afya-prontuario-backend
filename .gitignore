@@ -1,5 +1,4 @@
 # compiled output
-ormconfig.js
 /dist
 /node_modules
 
@@ -29,5 +28,3 @@ yarn.lock
 
 # Optional npm cache directory
 .npm
-
-
