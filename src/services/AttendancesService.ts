@@ -1,3 +1,4 @@
+import { Request, Response } from 'express';
 import { getCustomRepository, Repository } from 'typeorm';
 import { Attendance } from './../models/attendance';
 import { AttendanceRepository } from '../repositories/AttendancesRepository';
@@ -7,6 +8,7 @@ interface IAttendance {
   serviceDate: Date;
   serviceTime: Date;
   value: string;
+  id?: string;
 }
 
 class AttendancesService {
@@ -42,6 +44,11 @@ class AttendancesService {
     await this.attendanceRepository.save(attendance);
 
     return attendance;
+  }
+
+  async listAll() {
+    const attendances = await this.attendanceRepository.find();
+    return attendances;
   }
 }
 
