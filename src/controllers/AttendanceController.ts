@@ -1,27 +1,26 @@
 import { Request, Response } from 'express';
-import { getCustomRepository } from 'typeorm';
-import { AttendanceRepository } from '../repositories/AttendancesRepository';
+import { AttendancesService } from '../services/AttendancesService';
 
 class AttendanceController {
-  async create(request: Request, response: Response) {
+  async create(request: Request, response: Response): Promise<Response> {
     const { schedulingDate, serviceDate, serviceTime, value } = request.body;
 
-    const attendanceRepository = getCustomRepository(AttendanceRepository);
+    const attendancesService = new AttendancesService();
 
-    const attendance = attendanceRepository.create({
+    const attendance = await attendancesService.create({
       schedulingDate,
       serviceDate,
       serviceTime,
       value,
     });
-    return await attendanceRepository.save(attendance);
-  }
 
-  async list(request: Request, response: Response) {
-    const attendanceRepository = getCustomRepository(AttendanceRepository);
-    const attendances = await attendanceRepository.find();
-
-    return attendances;
+    if (attendance) {
+      return response.status(201).json(attendance);
+    } else {
+      return response
+        .status(404)
+        .json({ messagem: 'ERROR when registering Attendance!' });
+    }
   }
 }
 
