@@ -1,4 +1,3 @@
-import { Request, Response } from 'express';
 import { getCustomRepository, Repository } from 'typeorm';
 import { Attendance } from './../models/attendance';
 import { AttendanceRepository } from '../repositories/AttendancesRepository';
