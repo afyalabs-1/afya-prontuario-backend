@@ -52,6 +52,18 @@ class AttendancesService {
     return attendances;
   }
 
+  async listId(id: string) {
+    const attendance = await this.attendanceRepository.findOne({
+      id,
+    });
+
+    if (!attendance) {
+      throw new Error('Attendance not found!');
+    }
+
+    return attendance;
+  }
+
   async update({
     id,
     schedulingDate,
