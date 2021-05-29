@@ -9,5 +9,6 @@ attendanceRouter.post('/', attendanceController.create);
 attendanceRouter.get('/', attendanceController.listAll);
 attendanceRouter.get('/:id', attendanceController.listId);
 attendanceRouter.put('/:id', attendanceController.update);
+attendanceRouter.delete('/:id', attendanceController.delete);
 
 export { attendanceRouter };

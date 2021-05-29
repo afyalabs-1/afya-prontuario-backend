@@ -76,6 +76,22 @@ class AttendanceController {
       });
     }
   }
+
+  async delete(request: Request, response: Response): Promise<Response> {
+    const { id } = request.params;
+
+    const attendanceService = new AttendancesService();
+
+    try {
+      const attendance = await attendanceService.delete(id);
+
+      return response.json(attendance);
+    } catch (error) {
+      return response.status(400).json({
+        message: error.message,
+      });
+    }
+  }
 }
 
 export { AttendanceController };

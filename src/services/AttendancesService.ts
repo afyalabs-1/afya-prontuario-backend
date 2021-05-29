@@ -92,6 +92,20 @@ class AttendancesService {
 
     return attendanceNow;
   }
+
+  async delete(id: string) {
+    const attendance = await this.attendanceRepository.findOne({
+      id,
+    });
+
+    if (!attendance) {
+      throw new Error('Attendance not found!');
+    }
+
+    this.attendanceRepository.delete({ id });
+
+    return attendance;
+  }
 }
 
 export { AttendancesService };
