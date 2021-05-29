@@ -19,6 +19,7 @@ class AttendancesService {
   }
 
   async create({
+    id,
     schedulingDate,
     serviceDate,
     serviceTime,
@@ -49,6 +50,35 @@ class AttendancesService {
   async listAll() {
     const attendances = await this.attendanceRepository.find();
     return attendances;
+  }
+
+  async update({
+    id,
+    schedulingDate,
+    serviceDate,
+    serviceTime,
+    value,
+  }: IAttendance) {
+    const attendance = await this.attendanceRepository.findOne({
+      id,
+    });
+
+    if (!attendance) {
+      throw new Error('ERROR: Attendance not found!');
+    }
+
+    attendance.schedulingDate = schedulingDate;
+    attendance.serviceTime = serviceTime;
+    attendance.serviceDate = serviceDate;
+    attendance.value = value;
+
+    await this.attendanceRepository.save(attendance);
+
+    const attendanceNow = await this.attendanceRepository.findOne({
+      id,
+    });
+
+    return attendanceNow;
   }
 }
 

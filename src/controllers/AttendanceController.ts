@@ -1,14 +1,6 @@
 import { Request, Response } from 'express';
 import { AttendancesService } from '../services/AttendancesService';
 
-/* interface IAttendance {
-  schedulingDate: Date;
-  serviceDate: Date;
-  serviceTime: Date;
-  value: string;
-  id: string;
-}
-*/
 class AttendanceController {
   async create(request: Request, response: Response): Promise<Response> {
     const { schedulingDate, serviceDate, serviceTime, value } = request.body;
@@ -37,6 +29,36 @@ class AttendanceController {
     const attendances = await attendancesService.listAll();
 
     return response.json(attendances);
+  }
+
+  async update(request: Request, response: Response): Promise<Response> {
+    const { id } = request.params;
+
+    const { schedulingDate, serviceDate, serviceTime, value } = request.body;
+
+    const attendanceService = new AttendancesService();
+
+    try {
+      const attendance = await attendanceService.update({
+        id,
+        schedulingDate,
+        serviceDate,
+        serviceTime,
+        value,
+      });
+
+      if (attendance) {
+        return response.status(200).json(attendance);
+      } else {
+        return response.status(404).json({
+          message: 'ERROR when updating Attendance!',
+        });
+      }
+    } catch (error) {
+      return response.status(400).json({
+        message: error.message,
+      });
+    }
   }
 }
 
