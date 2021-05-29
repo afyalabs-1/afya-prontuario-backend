@@ -9,8 +9,8 @@ router.get('/', (request, response) => {
   return response.json({ message: 'Afya Challenge - Team 1' });
 });
 
-router.use('./attendances', attendanceRouter);
 router.use('/professions', professionRouter);
 router.use('/specialists', specialistRouter);
+router.use('/attendances', attendanceRouter);
 
 export { router };
