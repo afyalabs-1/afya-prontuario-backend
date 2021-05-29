@@ -5,51 +5,68 @@ import { AppError } from '../error/AppError';
 
 class SpecialistController {
     async list(specialist: string) {
-        const specialistRepository = getCustomRepository(SpecialistRepository);
-        let specialistList = null;
-        
-        if (specialist) {
-            specialistList = await specialistRepository.find({
-                where: { name: Like(`%${specialist}%`) }
-            });
-        } else {
-            specialistList = await specialistRepository.find();
-        }
+        try {
+            const specialistRepository = getCustomRepository(SpecialistRepository);
+            let specialistList = null;
+            
+            if (specialist) {
+                specialistList = await specialistRepository.find({
+                    where: { name: Like(`%${specialist}%`) }
+                });
+            } else {
+                specialistList = await specialistRepository.find();
+            }
 
-        if (specialistList) {
-            return specialistList;
-        } else {
+            if (specialistList) {
+                return specialistList;
+            }
+        } catch (error) {
             throw new AppError(
                 500,
-                'Specialist not found!',
-                'Error > SpecialistController > List'
+                'Profession not found!',
+                'Error > ProfessionController > create'
             );
         }
     }
     
-    async create(request: Request, response: Response) { //return response.json({message: 'No controller: \n'+request.query.name});
-        const {
-            record, 
-            name, 
-            phoneNumber, 
-            cellPhone, 
-            email, 
-            professionId
-        } = request.query;
+    async create(request: Request, response: Response) {
+        try {
+            const {
+                record, 
+                name, 
+                phoneNumber, 
+                cellPhone, 
+                email, 
+                professionId
+            } = request.query;
 
-        // response.json({message: request.query});
-        const specialistRepository = getCustomRepository(SpecialistRepository);
+            const specialistRepository = getCustomRepository(SpecialistRepository);
 
-        const createSpecialist = specialistRepository.create({
-            record: record,
-            name: name,
-            phoneNumber: phoneNumber,
-            cellPhone: cellPhone,
-            email: email,
-            professionId: professionId
-        });
+            const createSpecialist = specialistRepository.create({
+                record: record,
+                name: name,
+                phoneNumber: phoneNumber,
+                cellPhone: cellPhone,
+                email: email,
+                professionId: professionId
+            });
 
-        return specialistRepository.save(createSpecialist);
+            let createdSpecialist = specialistRepository.save(createSpecialist);
+
+            if (createdSpecialist) {
+                return new AppError(
+                    201,
+                    'Profession created!',
+                    'Success > ProfessionController > create'
+                );
+            }
+        } catch (error) {
+            throw new AppError(
+                500,
+                'Profession not found!',
+                'Error > ProfessionController > create'
+            );
+        }
     }
 }
 
