@@ -1,21 +1,18 @@
 import {
 	IsEmail,
 	IsOptional,
-	IsString,
 	Length,
 } from 'class-validator';
 import { Column, Entity, ManyToOne } from 'typeorm';
 import { BaseEntity } from './base_entity';
 import { Profession } from './profession';
 
-@Entity()
+@Entity('specialists')
 export class Specialists extends BaseEntity<Specialists> {
-	@IsString({ always: true })
 	@Length(0, 50, { always: true })
-	@Column({ type: 'varchar', length: 50, nullable: false, unique: true })
+	@Column({ type: 'varchar', length: 50, nullable: false })
 	record: string;
 
-	@IsString({ always: true })
 	@Length(1, 150, { always: true })
 	@Column({ type: 'varchar', length: 150, nullable: false })
 	name: string;
@@ -31,6 +28,6 @@ export class Specialists extends BaseEntity<Specialists> {
 	@Column({ type: 'varchar', length: 255 })
 	email: string;
 
-	@ManyToOne(() => Profession, profession => profession.specialists)
+	@ManyToOne(() => Profession, profession => profession.specialist)
 	profession: Profession;
 }
