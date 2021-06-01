@@ -3,7 +3,15 @@ import { AttendancesService } from '../services/AttendancesService';
 
 class AttendanceController {
   async create(request: Request, response: Response): Promise<Response> {
-    const { schedulingDate, serviceDate, serviceTime, value } = request.body;
+    const {
+      schedulingDate,
+      serviceDate,
+      serviceTime,
+      value,
+      idClient,
+      idSpecialist,
+      status,
+    } = request.body;
 
     const attendancesService = new AttendancesService();
 
@@ -12,6 +20,9 @@ class AttendanceController {
       serviceDate,
       serviceTime,
       value,
+      idClient,
+      idSpecialist,
+      status,
     });
 
     if (attendance) {
@@ -34,7 +45,15 @@ class AttendanceController {
   async update(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
-    const { schedulingDate, serviceDate, serviceTime, value } = request.body;
+    const {
+      schedulingDate,
+      serviceDate,
+      serviceTime,
+      value,
+      idClient,
+      idSpecialist,
+      status,
+    } = request.body;
 
     const attendanceService = new AttendancesService();
 
@@ -45,6 +64,9 @@ class AttendanceController {
         serviceDate,
         serviceTime,
         value,
+        idClient,
+        idSpecialist,
+        status,
       });
 
       if (attendance) {

@@ -33,5 +33,5 @@ export class Attendance extends BaseEntity<Attendance> {
   idClient: string;
 
   @Column({ nullable: true })
-  idSpecilist: string;
+  idSpecialist: string;
 }

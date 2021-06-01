@@ -8,6 +8,9 @@ interface IAttendance {
   serviceTime: Date;
   value: string;
   id?: string;
+  idClient: string;
+  idSpecialist: string;
+  status: string;
 }
 
 class AttendancesService {
@@ -18,27 +21,37 @@ class AttendancesService {
   }
 
   async create({
-    id,
     schedulingDate,
     serviceDate,
     serviceTime,
     value,
+    idClient,
+    idSpecialist,
+    status,
   }: IAttendance) {
     const attendanceExists = await this.attendanceRepository.findOne({
       schedulingDate,
       serviceTime,
       serviceDate,
+      idClient,
+      idSpecialist,
     });
 
     if (attendanceExists) {
       return attendanceExists;
     }
 
+    status = null;
+    status = 'SCHEDULED';
+
     const attendance = this.attendanceRepository.create({
       schedulingDate,
       serviceDate,
       serviceTime,
       value,
+      idClient,
+      idSpecialist,
+      status,
     });
 
     await this.attendanceRepository.save(attendance);
@@ -69,6 +82,9 @@ class AttendancesService {
     serviceDate,
     serviceTime,
     value,
+    idClient,
+    idSpecialist,
+    status,
   }: IAttendance) {
     const attendance = await this.attendanceRepository.findOne({
       id,
@@ -82,6 +98,9 @@ class AttendancesService {
     attendance.serviceTime = serviceTime;
     attendance.serviceDate = serviceDate;
     attendance.value = value;
+    attendance.idClient = idClient;
+    attendance.idSpecialist = idSpecialist;
+    attendance.status = status;
 
     await this.attendanceRepository.save(attendance);
 
