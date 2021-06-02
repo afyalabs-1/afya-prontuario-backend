@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { startOfHour, parseISO, isBefore } from 'date-fns';
 import { AttendancesService } from '../services/AttendancesService';
 
 class AttendanceController {
@@ -12,6 +13,12 @@ class AttendanceController {
       idSpecialist,
       status,
     } = request.body;
+
+    // Checando se a data de agendamento é menor que a data atual
+    const hourStart = startOfHour(parseISO(schedulingDate));
+    if (isBefore(hourStart, new Date())) {
+      return response.status(400).json({ error: 'Date are not permitted' });
+    }
 
     const attendancesService = new AttendancesService();
 
@@ -29,7 +36,7 @@ class AttendanceController {
       return response.status(201).json(attendance);
     } else {
       return response
-        .status(404)
+        .status(401)
         .json({ messagem: 'ERROR when registering Attendance!' });
     }
   }
@@ -54,6 +61,12 @@ class AttendanceController {
       idSpecialist,
       status,
     } = request.body;
+
+    // Checando se a data de agendamento é menor que a data atual
+    const hourStart = startOfHour(parseISO(schedulingDate));
+    if (isBefore(hourStart, new Date())) {
+      return response.status(400).json({ error: 'Date are not permitted' });
+    }
 
     const attendanceService = new AttendancesService();
 

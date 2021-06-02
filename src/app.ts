@@ -6,4 +6,6 @@ const app = express();
 app.use(express.json());
 app.use(router);
 
+console.log(Date());
+
 export default app;
