@@ -41,9 +41,6 @@ class AttendancesService {
       return attendanceExists;
     }
 
-    status = null;
-    status = 'SCHEDULED';
-
     const attendance = this.attendanceRepository.create({
       schedulingDate,
       serviceDate,
@@ -100,6 +97,30 @@ class AttendancesService {
     attendance.value = value;
     attendance.idClient = idClient;
     attendance.idSpecialist = idSpecialist;
+    attendance.status = status;
+
+    await this.attendanceRepository.save(attendance);
+
+    const attendanceNow = await this.attendanceRepository.findOne({
+      id,
+    });
+
+    return attendanceNow;
+  }
+
+  async updateStatus(id: string, status: string) {
+    const attendance = await this.attendanceRepository.findOne({
+      id,
+    });
+
+    if (!attendance) {
+      throw new Error('Attendance not found!');
+    }
+
+    if (status === null || status === ' ' || status === undefined) {
+      throw new Error('The Status is mandatory!');
+    }
+
     attendance.status = status;
 
     await this.attendanceRepository.save(attendance);

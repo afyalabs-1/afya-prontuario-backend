@@ -83,6 +83,22 @@ class AttendanceController {
     }
   }
 
+  async updateStatus(request: Request, response: Response): Promise<Response> {
+    const { id, status } = request.body;
+
+    const attendanceService = new AttendancesService();
+
+    try {
+      const attendance = await attendanceService.updateStatus(id, status);
+
+      return response.json(attendance);
+    } catch (error) {
+      return response.status(400).json({
+        message: error.message,
+      });
+    }
+  }
+
   async listId(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
