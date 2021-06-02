@@ -5,4 +5,8 @@ module.exports = {
 	"entities": [process.env.ENTITIES],
 	"cli":{
 		"migrationsDir": [
-		"src/database/migrations/"
+		  "src/database/migrations/"
+	    ],
+	  "entitiesDir": "src/models/"
+	  },
+  }
