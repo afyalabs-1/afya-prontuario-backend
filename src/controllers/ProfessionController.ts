@@ -1,69 +1,100 @@
 import { Request, Response } from 'express';
-import { getCustomRepository, Like } from 'typeorm';
-import { ProfessionRepository } from '../repositories/ProfessionRepository';
+import { ProfessionService } from '../services/ProfessionsService';
 import { AppError } from '../error/AppError';
 
 class ProfessionController {
-    async listAll(request: Request, response: Response): Promise<Response> {
-        try {
-            
-
-        } catch (error) {
-            throw new AppError(
-                500,
-                'Profession not found!',
-                'Error > ProfessionController > create'
-            );
-        }
-            
+  async listAll(request: Request, response: Response) {
+    try {
+      var professionName = (request.query as any).name
+      var professionService = new ProfessionService();
+      var professions = await professionService.listAll(professionName); 
+      
+      if (professions) {
+        return response.json({
+          statusCode: 200,
+          professions: professions
+        });
+      } else {
+        return new AppError(
+          404,
+          'Profession not found!',
+          'Success > ProfessionController > listAll'
+        );
+      }
+    } catch (error) {
+      throw new AppError(
+        500,
+        'Profession not found!',
+        'Error > ProfessionController > listAll'
+      );
     }
+  }
 
-    async create(request: Request, response: Response) {
-        try {
-            const professionRepository = getCustomRepository(ProfessionRepository);
-return response.json({data: request.body})
-            const createProfession = professionRepository.create({
-                name: name
-            });
+  async create(request: Request, response: Response) {
+    try {
+      var { name } = request.body;
+      var professionService = new ProfessionService();
+      var createdProfession = await professionService.create(name);
 
-            let professionCreated = professionRepository.save(createProfession);
-
-            if (professionCreated) {
-                return new AppError(
-                    201,
-                    'Profession created!',
-                    'Success > ProfessionController > create'
-                );
-            }
-        } catch (err) {
-            throw new AppError(
-                500,
-                'Profession not found!',
-                'Error > ProfessionController > delete'
-            );
-        }
-        
+      if (createdProfession) {
+        return response.json({
+          statusCode: 201,
+          message: `Profession ${name} created!`,
+          log: 'Success > ProfessionController > create'
+        });
+      }
+    } catch (err) {
+      throw new AppError(
+        500,
+        'Profession not created!',
+        'Error > ProfessionController > create()'
+      );
     }
+  }
 
-    async delete(id: string) {
-        try {
-            const professionRepository = getCustomRepository(ProfessionRepository);
-            const professionDelete = professionRepository.find({ where: { id }, withDeleted: true });
-            if (professionDelete) {
-                return new AppError(
-                    200,
-                    'Profession is deleted!',
-                    'Success > ProfessionController > delete'
-                )
-            }
-        } catch (err) {
-            throw new AppError(
-                500,
-                'Profession not found!',
-                'Error > ProfessionController > delete'
-            );
-        }
+  async update(request: Request, response: Response) {
+    try {
+      var { id, name } = request.body;
+      var professionService = new ProfessionService();
+      var updatedProfession = await professionService.update(id, name);
+
+      if (updatedProfession) {
+        return response.json({
+          statusCode: 200,
+          message: 'Profession updated!',
+          log: 'Success > ProfessionController > update()'
+        });
+      }
+    } catch (error) {
+      throw new AppError(
+        500,
+        'Profession not updated!',
+        'Error > ProfessionController > delete'
+      );
     }
+  }
+
+  async delete(request: Request, response: Response) {
+    try {
+      const { id } = request.body;
+      const professionService = new ProfessionService();
+      const deleteProfession = professionService.delete(id);
+
+      if (deleteProfession) {
+        return response.json({
+          statusCode: 201,
+          message: `Profession deleted!`,
+          log: 'Success > ProfessionController > create'
+        });
+      }
+    } catch(err) {
+      throw new AppError(
+        500,
+        'Profession not found!',
+        'Error > ProfessionController > delete'
+      );
+    }
+  }
 }
 
 export { ProfessionController };
