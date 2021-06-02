@@ -17,7 +17,7 @@ class ProfessionController {
       } else {
         return new AppError(
           404,
-          'Profession not found!',
+          'Profession not found! ',
           'Success > ProfessionController > listAll'
         );
       }
