@@ -1,3 +1,4 @@
+
 import {
   IsEnum,
   IsOptional,
@@ -14,6 +15,8 @@ import {
   OneToMany,
   OneToOne,
 } from 'typeorm';
+
+
 
 import { BaseEntity } from './base_entity';
 import { Client } from './client';
@@ -71,6 +74,7 @@ export class Address extends BaseEntity<Address> {
 
   @IsOptional({ always: true })
   @IsString({ always: true })
+
   @MaxLength(60, { always: true })
   @Column({ type: 'varchar', nullable: true })
   complement: string;

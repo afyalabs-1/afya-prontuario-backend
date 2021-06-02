@@ -1,3 +1,5 @@
+import { Type } from 'class-transformer';
+
 import {
   IsEmail,
   IsEnum,
@@ -18,6 +20,7 @@ import {
   OneToMany,
   OneToOne,
 } from 'typeorm';
+
 import { Address } from './address';
 import { BaseEntity } from './base_entity';
 
