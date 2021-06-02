@@ -15,7 +15,7 @@ class AttendanceController {
     } = request.body;
 
     // Checando se a data de agendamento é menor que a data atual
-    const hourStart = startOfHour(parseISO(schedulingDate));
+    const hourStart = startOfHour(parseISO(serviceDate));
     if (isBefore(hourStart, new Date())) {
       return response.status(400).json({ error: 'Date are not permitted' });
     }
@@ -42,9 +42,18 @@ class AttendanceController {
   }
 
   async listAll(request: Request, response: Response): Promise<Response> {
+    const { schedulingDate, serviceDate, idClient, idSpecialist, status } =
+      request.body;
+
     const attendancesService = new AttendancesService();
 
-    const attendances = await attendancesService.listAll();
+    const attendances = await attendancesService.listAll({
+      schedulingDate,
+      serviceDate,
+      idClient,
+      idSpecialist,
+      status,
+    });
 
     return response.json(attendances);
   }
@@ -63,7 +72,7 @@ class AttendanceController {
     } = request.body;
 
     // Checando se a data de agendamento é menor que a data atual
-    const hourStart = startOfHour(parseISO(schedulingDate));
+    const hourStart = startOfHour(parseISO(serviceDate));
     if (isBefore(hourStart, new Date())) {
       return response.status(400).json({ error: 'Date are not permitted' });
     }

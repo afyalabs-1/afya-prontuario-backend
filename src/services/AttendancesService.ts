@@ -56,8 +56,20 @@ class AttendancesService {
     return attendance;
   }
 
-  async listAll() {
-    const attendances = await this.attendanceRepository.find();
+  async listAll({
+    schedulingDate,
+    serviceDate,
+    idClient,
+    idSpecialist,
+    status,
+  }: IAttendance) {
+    const attendances = await this.attendanceRepository.find({
+      schedulingDate,
+      serviceDate,
+      idClient,
+      idSpecialist,
+      status,
+    });
     return attendances;
   }
 
