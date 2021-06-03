@@ -8,7 +8,7 @@ module.exports = {
   migrations: [process.env.MIGRATIONS],
   entities: [process.env.ENTITIES],
   cli: {
-    migrationsDir: './src/database/migrations/',
+    migrationsDir: ['./src/database/migrations/'],
     entitiesDir: './src/models/',
   },
 };
