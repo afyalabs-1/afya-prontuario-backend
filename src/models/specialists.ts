@@ -9,7 +9,7 @@ import { Profession } from './profession';
 
 @Entity('specialists')
 export class Specialists extends BaseEntity<Specialists> {
-	@Length(0, 50, { always: true })
+	@Length(1, 50, { always: true })
 	@Column({ type: 'varchar', length: 50, nullable: false })
 	record: string;
 
