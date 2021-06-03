@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 import { AddressRouter } from './routes/AddressRouter';
 import { ClientRouter } from './routes/ClientRouter';
-// import { attendanceRouter } from './routes/AttendanceRouter';
+import { attendanceRouter } from './routes/AttendanceRouter';
 import { professionRouter } from './routes/ProfessionRouter';
 import { specialistRouter } from './routes/SpecialistRouter';
 
@@ -12,7 +12,7 @@ router.get('/', (request, response) => {
   return response.json({ message: 'Afya Challenge - Team 1' });
 });
 
-// router.use('/attendances', attendanceRouter);
+router.use('/attendances', attendanceRouter);
 router.use('/clients', ClientRouter);
 router.use('/address', AddressRouter);
 router.use('/professions', professionRouter);
