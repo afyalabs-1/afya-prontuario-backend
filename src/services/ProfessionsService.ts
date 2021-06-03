@@ -37,7 +37,7 @@ class ProfessionService {
     }
   }
 
-  async create(name: string) { // return response.json({ nome: name });
+  async create(name: string) {
     var profession = this.professionRepository.create({
       name
     });
@@ -56,17 +56,6 @@ class ProfessionService {
   }
 
   async update(id: string, name: string) {
-    // var profession = this.professionRepository.findOne(id);
-    // var profession = this.professionRepository.create({
-    //   name
-    // });
-    // return profession;
-    // var profession = this.professionRepository.create({
-    //   name
-    // })
-
-
-
     return this.professionRepository.save({ name, id });
   }
 
