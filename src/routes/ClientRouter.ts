@@ -2,7 +2,6 @@ import { Router } from 'express';
 import { ClientController } from '../controllers/ClientController';
 
 const ClientRouter = Router();
-
 const clientController = new ClientController();
 
 ClientRouter.post('/', clientController.create);

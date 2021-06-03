@@ -12,7 +12,7 @@ class AddressController {
       city,
       state,
       postalCode,
-      client,
+      clients,
     } = request.body;
 
     const addressService = new AddressService();
@@ -26,7 +26,7 @@ class AddressController {
       city,
       state,
       postalCode,
-      client,
+      clients,
     });
 
     if (address) {
@@ -39,10 +39,10 @@ class AddressController {
   }
 
   async list(request: Request, response: Response): Promise<Response> {
-    const street = (request.query as any).street;
+    const clients = (request.query as any).clients;
     // const cpf = request.query.cpf;
     const addressService = new AddressService();
-    const address = await addressService.list(street);
+    const address = await addressService.list(clients);
     return response.json(address);
   }
 
@@ -57,7 +57,7 @@ class AddressController {
       city,
       state,
       postalCode,
-      client,
+      clients,
     } = request.body;
 
     const addressService = new AddressService();
@@ -72,7 +72,7 @@ class AddressController {
         city,
         state,
         postalCode,
-        client,
+        clients,
       });
 
       if (address) {

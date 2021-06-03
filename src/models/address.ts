@@ -1,4 +1,3 @@
-
 import {
   IsEnum,
   IsOptional,
@@ -6,18 +5,7 @@ import {
   Length,
   MaxLength,
 } from 'class-validator';
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToMany,
-  ManyToOne,
-  OneToMany,
-  OneToOne,
-} from 'typeorm';
-
-
-
+import { Column, Entity, ManyToOne } from 'typeorm';
 import { BaseEntity } from './base_entity';
 import { Client } from './client';
 
@@ -74,7 +62,6 @@ export class Address extends BaseEntity<Address> {
 
   @IsOptional({ always: true })
   @IsString({ always: true })
-
   @MaxLength(60, { always: true })
   @Column({ type: 'varchar', nullable: true })
   complement: string;
@@ -98,10 +85,6 @@ export class Address extends BaseEntity<Address> {
   @Column({ type: 'varchar', nullable: false })
   postalCode: string;
 
-  @ManyToOne(type => Client)
-  @JoinColumn({
-    name: 'clientID',
-    referencedColumnName: 'address',
-  })
-  public client: Client;
+  @ManyToOne(type => Client, client => client.addresses)
+  clients: Client[];
 }

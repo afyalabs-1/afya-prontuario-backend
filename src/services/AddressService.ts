@@ -13,7 +13,7 @@ interface IAddress {
   city: string;
   state: string;
   postalCode: string;
-  client: string;
+  clients: [];
 }
 
 class AddressService {
@@ -32,7 +32,7 @@ class AddressService {
     city,
     state,
     postalCode,
-    client,
+    clients,
   }: IAddress) {
     const address = this.addressRepository.create({
       kind,
@@ -43,7 +43,7 @@ class AddressService {
       city,
       state,
       postalCode,
-      client,
+      clients,
     });
 
     await this.addressRepository.save(address);
@@ -51,17 +51,17 @@ class AddressService {
     return address;
   }
 
-  async list(client: IAddress) {
+  async list(clients: IAddress) {
     try {
-      if (client) {
+      if (clients) {
         const address = await this.addressRepository.find({
-          where: { client: Like(`%${client}%`) },
-          relations: ['client'],
+          where: { clients: Like(`%${clients}%`) },
+          relations: ['clients'],
         });
         return address;
       } else {
         const address = await this.addressRepository.find({
-          relations: ['client'],
+          relations: ['clients'],
         });
         return address;
       }
@@ -80,7 +80,7 @@ class AddressService {
     city,
     state,
     postalCode,
-    clientID,
+    clients,
   }: IAddress) {
     const updateAddress = await this.addressRepository.findOne({ id });
 

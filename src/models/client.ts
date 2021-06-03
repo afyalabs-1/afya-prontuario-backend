@@ -1,5 +1,3 @@
-import { Type } from 'class-transformer';
-
 import {
   IsEmail,
   IsEnum,
@@ -10,17 +8,7 @@ import {
   Length,
   MaxLength,
 } from 'class-validator';
-
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToMany,
-  ManyToOne,
-  OneToMany,
-  OneToOne,
-} from 'typeorm';
-
+import { Column, Entity, JoinTable, ManyToMany } from 'typeorm';
 import { Address } from './address';
 import { BaseEntity } from './base_entity';
 
@@ -68,9 +56,6 @@ export class Client extends BaseEntity<Client> {
   @Column({ type: 'varchar', length: 15, nullable: false })
   cellPhone: string;
 
-  @ManyToMany(type => Address)
-  address: Address[];
-
   @IsISO8601({ strict: true })
   @Column({ type: 'date', nullable: true })
   birthDate: Date;
@@ -87,4 +72,11 @@ export class Client extends BaseEntity<Client> {
   @IsUrl({}, { always: true })
   @Column({ type: 'varchar', nullable: true })
   profilePictureUrl?: string;
+
+  @ManyToMany(type => Address, address => address.clients, {
+    cascade: true,
+    eager: true,
+  })
+  @JoinTable()
+  addresses: Address[];
 }

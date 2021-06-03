@@ -68,11 +68,13 @@ class ClientService {
       if (cpf) {
         const clients = await this.clientRepository.find({
           where: { cpf: Like(`%${cpf}%`) },
-          // relations: ['address'],
+          relations: ['addresses'],
         });
         return clients;
       } else {
-        const clients = await this.clientRepository.find();
+        const clients = await this.clientRepository.find({
+          relations: ['addresses'],
+        });
         // clientsList = await clientsRepository.find({ relations: ['address'] });
         return clients;
       }
