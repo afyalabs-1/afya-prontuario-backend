@@ -1,4 +1,3 @@
-import { Type } from 'class-transformer';
 import {
   IsEmail,
   IsEnum,
@@ -7,12 +6,9 @@ import {
   IsString,
   IsUrl,
   Length,
+  MaxLength,
 } from 'class-validator';
-
-import { IsBrPhone } from '../_common/is_br_phone';
-import { IsCPF } from '../_common/is_cpf';
-
-import { Column, Entity, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany } from 'typeorm';
 import { Address } from './address';
 import { BaseEntity } from './base_entity';
 
@@ -33,12 +29,11 @@ export class BloodTypes {
   static readonly AB_NEGATIVE = 'AB_NEGATIVE';
 }
 
-@Entity('clients')
+@Entity('client')
 export class Client extends BaseEntity<Client> {
   @IsString({ always: true })
-  @Length(14, 14, { always: true })
-  @IsCPF({ always: true })
-  @Column({ type: 'varchar', length: 14, nullable: false, unique: true })
+  @MaxLength(11, { always: true })
+  @Column({ type: 'varchar', length: 11, nullable: false, unique: true })
   cpf: string;
 
   @IsString({ always: true })
@@ -46,26 +41,23 @@ export class Client extends BaseEntity<Client> {
   @Column({ type: 'varchar', length: 255, nullable: false })
   name: string;
 
+  @IsString({ always: true })
   @IsEmail({}, { always: true })
   @Column({ type: 'varchar', length: 255, nullable: false, unique: true })
   email: string;
 
-  @IsBrPhone({ always: true })
   @IsString({ always: true })
-  @Column({ type: 'varchar', length: 15, nullable: false })
+  @Length(10, 10, { always: false })
+  @Column({ type: 'varchar', length: 15, nullable: true })
   phoneNumber: string;
 
-  @IsBrPhone({ always: true })
   @IsString({ always: true })
+  @Length(10, 11, { always: true })
   @Column({ type: 'varchar', length: 15, nullable: false })
   cellPhone: string;
 
-  @Type(() => Address)
-  @ManyToOne(type => Address, address => address.client)
-  address: Address[];
-
   @IsISO8601({ strict: true })
-  @Column({ nullable: true })
+  @Column({ type: 'date', nullable: true })
   birthDate: Date;
 
   @IsEnum(Gender, { always: true })
@@ -78,6 +70,13 @@ export class Client extends BaseEntity<Client> {
 
   @IsOptional({ always: true })
   @IsUrl({}, { always: true })
-  @Column()
+  @Column({ type: 'varchar', nullable: true })
   profilePictureUrl?: string;
+
+  @ManyToMany(type => Address, address => address.clients, {
+    cascade: true,
+    eager: true,
+  })
+  @JoinTable()
+  addresses: Address[];
 }

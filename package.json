@@ -44,6 +44,7 @@
     "typeorm-encrypted": "^0.5.6",
     "uuid": "^8.3.2",
     "uuidv4": "^6.0.7",
-    "validator": "^13.6.0"
+    "validator": "^13.6.0",
+    "yup": "^0.32.9"
   }
 }
