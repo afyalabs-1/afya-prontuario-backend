@@ -1,51 +1,25 @@
-import {
-  Entity,
-  Column,
-  OneToMany,
-  Index,
-  BeforeInsert,
-  BeforeUpdate,
-} from 'typeorm';
-import { IsString, Length, IsEmail, IsEnum, IsOptional } from 'class-validator';
-import { Exclude, Type } from 'class-transformer';
 import * as bcrypt from 'bcrypt';
+import { Exclude } from 'class-transformer';
+import { IsEnum, IsOptional, IsString, Length } from 'class-validator';
+import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany } from 'typeorm';
+import { Session } from './auth/session';
 import { BaseEntity } from './base_entity';
-// import { Session } from '../auth/session.entity';
-
-// const { CREATE, UPDATE } = CrudValidationGroups;
 
 export class UserRole {
   static readonly USER = 'USER';
   static readonly ADMINISTRATOR = 'ADMINISTRATOR';
 }
 
-export class UserStatus {
-  static readonly UNCONFIRMED_EMAIL = 'UNCONFIRMED_EMAIL';
-  static readonly APPROVAL_PENDING = 'APPROVAL_PENDING';
-  static readonly ACTIVE = 'ACTIVE';
-}
-
-@Entity('user')
-@Index('IDX_EMAIL_UNIQUE', ['email'], { unique: true })
-@Index('IDX_EMAILCONFIRMATIONCODE_UNIQUE', ['emailConfirmationCode'], {
-  unique: true,
-})
-@Index('IDX_PASSWORDRESETCODE_UNIQUE', ['passwordResetCode'], { unique: true })
+@Entity('users')
 export class User extends BaseEntity<User> {
-  // @IsOptional({ groups: [UPDATE] })
   @IsEnum(UserRole, { always: true })
   @Column({ type: 'enum', enum: UserRole, default: UserRole.USER })
   role: UserRole;
 
-  @IsOptional({ always: true })
-  @IsEnum(UserStatus, { always: true })
-  @Column({ type: 'enum', enum: UserStatus, default: UserStatus.ACTIVE })
-  status: UserStatus;
-
-  // @IsOptional({ groups: [UPDATE] })
-  @IsEmail({}, { always: true })
-  @Column({ type: 'varchar', length: 255 })
-  email: string;
+  @IsString({ always: true })
+  @Length(4, 20, { always: true })
+  @Column({ type: 'varchar', length: 20, unique: true })
+  login: string;
 
   @IsOptional({ always: true })
   @Length(6, 255, { always: true })
@@ -54,7 +28,6 @@ export class User extends BaseEntity<User> {
 
   currentPassword: string; // for validation when changing passwords
 
-  // @IsOptional({ groups: [UPDATE] })
   @IsString({ always: true })
   @Length(3, 150, { always: true })
   @Column({ type: 'varchar', length: 255, nullable: true })
@@ -62,14 +35,10 @@ export class User extends BaseEntity<User> {
 
   @Exclude()
   @Column({ type: 'varchar', length: 255, nullable: true })
-  emailConfirmationCode: string;
-
-  @Exclude()
-  @Column({ type: 'varchar', length: 255, nullable: true })
   passwordResetCode: string | null;
 
-  // @OneToMany(type => Session, session => session.user)
-  // sessions: Session[];
+  @OneToMany(type => Session, session => session.user)
+  sessions: Session[];
 
   // @OneToMany(type => UserDevice, device => device.user)
   // devices: UserDevice[];
