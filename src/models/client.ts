@@ -1,3 +1,4 @@
+import { Attendance } from './attendance';
 import {
   IsEmail,
   IsEnum,
@@ -8,7 +9,7 @@ import {
   Length,
   MaxLength,
 } from 'class-validator';
-import { Column, Entity, JoinTable, ManyToMany } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany, OneToMany } from 'typeorm';
 import { Address } from './address';
 import { BaseEntity } from './base_entity';
 
@@ -79,4 +80,7 @@ export class Client extends BaseEntity<Client> {
   })
   @JoinTable()
   addresses: Address[];
+
+  @OneToMany(() => Attendance, attendance => attendance.client)
+  attendance: Attendance[];
 }
