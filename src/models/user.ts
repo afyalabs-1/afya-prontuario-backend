@@ -19,30 +19,13 @@ export class UserRole {
   static readonly ADMINISTRATOR = 'ADMINISTRATOR';
 }
 
-export class UserStatus {
-  static readonly UNCONFIRMED_EMAIL = 'UNCONFIRMED_EMAIL';
-  static readonly APPROVAL_PENDING = 'APPROVAL_PENDING';
-  static readonly ACTIVE = 'ACTIVE';
-}
-
 @Entity('user')
-@Index('IDX_EMAIL_UNIQUE', ['email'], { unique: true })
-@Index('IDX_EMAILCONFIRMATIONCODE_UNIQUE', ['emailConfirmationCode'], {
-  unique: true,
-})
 @Index('IDX_PASSWORDRESETCODE_UNIQUE', ['passwordResetCode'], { unique: true })
 export class User extends BaseEntity<User> {
-  // @IsOptional({ groups: [UPDATE] })
   @IsEnum(UserRole, { always: true })
   @Column({ type: 'enum', enum: UserRole, default: UserRole.USER })
   role: UserRole;
 
-  @IsOptional({ always: true })
-  @IsEnum(UserStatus, { always: true })
-  @Column({ type: 'enum', enum: UserStatus, default: UserStatus.ACTIVE })
-  status: UserStatus;
-
-  // @IsOptional({ groups: [UPDATE] })
   @IsEmail({}, { always: true })
   @Column({ type: 'varchar', length: 255 })
   email: string;
@@ -54,7 +37,6 @@ export class User extends BaseEntity<User> {
 
   currentPassword: string; // for validation when changing passwords
 
-  // @IsOptional({ groups: [UPDATE] })
   @IsString({ always: true })
   @Length(3, 150, { always: true })
   @Column({ type: 'varchar', length: 255, nullable: true })
