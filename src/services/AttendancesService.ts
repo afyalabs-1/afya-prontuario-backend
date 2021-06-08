@@ -1,162 +1,269 @@
-// import { getCustomRepository, Repository } from 'typeorm';
-// import { Attendance } from './../models/attendance';
-// import { AttendanceRepository } from '../repositories/AttendancesRepository';
+import { getCustomRepository, Repository } from 'typeorm';
+import { Attendance } from './../models/attendance';
+import { Client } from './../models/client';
+import { Specialists } from './../models/specialists';
 
-// interface IAttendance {
-//   schedulingDate: Date;
-//   serviceDate: Date;
-//   serviceTime: Date;
-//   value: string;
-//   id?: string;
-//   idClient: string;
-//   idSpecialist: string;
-//   status: string;
-// }
+import { AttendanceRepository } from '../repositories/AttendancesRepository';
+import { ClientRepository } from '../repositories/ClientsRepository';
+import { SpecialistRepository } from '../repositories/SpecialistRepository';
+import { AppError } from '../error/AppError';
 
-// class AttendancesService {
-//   private attendanceRepository: Repository<Attendance>;
+interface IAttendance {
+  id?: string;
+  schedulingDate: Date;
+  serviceDate: Date;
+  serviceTime: Date;
+  value: string;
+  client: [];
+  specialists: [];
+  status: string;
+}
 
-//   constructor() {
-//     this.attendanceRepository = getCustomRepository(AttendanceRepository);
-//   }
+class AttendancesService {
+  private attendanceRepository: Repository<Attendance>;
+  private clientRepository: Repository<Client>;
+  private specialistRepository: Repository<Specialists>;
 
-//   async create({
-//     schedulingDate,
-//     serviceDate,
-//     serviceTime,
-//     value,
-//     idClient,
-//     idSpecialist,
-//     status,
-//   }: IAttendance) {
-//     const attendanceExists = await this.attendanceRepository.findOne({
-//       schedulingDate,
-//       serviceTime,
-//       serviceDate,
-//       idClient,
-//       idSpecialist,
-//     });
+  constructor() {
+    this.attendanceRepository = getCustomRepository(AttendanceRepository);
+    this.clientRepository = getCustomRepository(ClientRepository);
+    this.specialistRepository = getCustomRepository(SpecialistRepository);
+  }
 
-//     if (attendanceExists) {
-//       return attendanceExists;
-//     }
+  // Validando Cliente e Especialista
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  async relationIsValid(identify: string, relation: string) {
+    if (relation.toUpperCase() === 'CLIENT') {
+      const clientId = identify;
+      const exists = await this.clientRepository.findOne({
+        where: { id: clientId },
+      });
+      return exists;
+    } else if (relation.toUpperCase() === 'SPECIALIST') {
+      const specialistId = identify;
+      const exists = await this.specialistRepository.findOne({
+        where: { id: specialistId },
+      });
+      return exists;
+    }
+  }
 
-//     const attendance = this.attendanceRepository.create({
-//       schedulingDate,
-//       serviceDate,
-//       serviceTime,
-//       value,
-//       idClient,
-//       idSpecialist,
-//       status,
-//     });
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  async create({
+    schedulingDate,
+    serviceDate,
+    serviceTime,
+    value,
+    client,
+    specialists,
+    status,
+  }: IAttendance) {
+    const attendanceExists = await this.attendanceRepository.findOne({
+      schedulingDate,
+      serviceDate,
+      serviceTime,
+      value,
+      client,
+      specialists,
+      status,
+    });
 
-//     await this.attendanceRepository.save(attendance);
+    if (attendanceExists) {
+      return attendanceExists;
+    }
 
-//     return attendance;
-//   }
+    // Verificando se o Cliente é valido!
+    const clientId = client.toString();
+    const clientExists = await this.relationIsValid(clientId, 'CLIENT');
 
-//   async listAll({
-//     schedulingDate,
-//     serviceDate,
-//     idClient,
-//     idSpecialist,
-//     status,
-//   }: IAttendance) {
-//     const attendances = await this.attendanceRepository.find({
-//       schedulingDate,
-//       serviceDate,
-//       idClient,
-//       idSpecialist,
-//       status,
-//     });
-//     return attendances;
-//   }
+    // Verificando se o Especialista é valido!
+    const specialistId = specialists.toString();
+    const specialistExists = await this.relationIsValid(
+      specialistId,
+      'SPECIALIST',
+    );
 
-//   async listId(id: string) {
-//     const attendance = await this.attendanceRepository.findOne({
-//       id,
-//     });
+    if (!clientExists) {
+      throw new AppError(404, 'Client Not Found', 'Client Not Found!');
+    } else if (!specialistExists) {
+      throw new AppError(404, 'Specialist Not Found', 'Specialist Not Found!');
+    } else {
+      const attendance = this.attendanceRepository.create({
+        schedulingDate,
+        serviceDate,
+        serviceTime,
+        value,
+        client,
+        specialists,
+        status,
+      });
 
-//     if (!attendance) {
-//       throw new Error('Attendance not found!');
-//     }
+      await this.attendanceRepository.save(attendance);
 
-//     return attendance;
-//   }
+      return attendance;
+    }
+  }
 
-//   async update({
-//     id,
-//     schedulingDate,
-//     serviceDate,
-//     serviceTime,
-//     value,
-//     idClient,
-//     idSpecialist,
-//     status,
-//   }: IAttendance) {
-//     const attendance = await this.attendanceRepository.findOne({
-//       id,
-//     });
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  async listScheduling(schedulingDate: Date) {
+    const attendance = await this.attendanceRepository.find({
+      schedulingDate,
+    });
 
-//     if (!attendance) {
-//       throw new Error('ERROR: Attendance not found!');
-//     }
+    return attendance;
+  }
 
-//     attendance.schedulingDate = schedulingDate;
-//     attendance.serviceTime = serviceTime;
-//     attendance.serviceDate = serviceDate;
-//     attendance.value = value;
-//     attendance.idClient = idClient;
-//     attendance.idSpecialist = idSpecialist;
-//     attendance.status = status;
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  async listService(serviceDate: Date) {
+    const attendance = await this.attendanceRepository.find({
+      serviceDate,
+    });
 
-//     await this.attendanceRepository.save(attendance);
+    return attendance;
+  }
 
-//     const attendanceNow = await this.attendanceRepository.findOne({
-//       id,
-//     });
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  async listClient(clientId: []) {
+    const attendance = await this.attendanceRepository.find({
+      client: clientId,
+    });
 
-//     return attendanceNow;
-//   }
+    return attendance;
+  }
 
-//   async updateStatus(id: string, status: string) {
-//     const attendance = await this.attendanceRepository.findOne({
-//       id,
-//     });
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  async listSpecialist(specialistsId: []) {
+    const attendance = await this.attendanceRepository.find({
+      specialists: specialistsId,
+    });
 
-//     if (!attendance) {
-//       throw new Error('Attendance not found!');
-//     }
+    return attendance;
+  }
 
-//     if (status === null || status === ' ' || status === undefined) {
-//       throw new Error('The Status is mandatory!');
-//     }
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  async listStatus(status: string) {
+    const attendance = await this.attendanceRepository.find({
+      status,
+    });
 
-//     attendance.status = status;
+    return attendance;
+  }
 
-//     await this.attendanceRepository.save(attendance);
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  async listId(id: string) {
+    const attendance = await this.attendanceRepository.findOne({
+      id,
+    });
 
-//     const attendanceNow = await this.attendanceRepository.findOne({
-//       id,
-//     });
+    if (!attendance) {
+      throw new Error('Attendance not found!');
+    }
 
-//     return attendanceNow;
-//   }
+    return attendance;
+  }
 
-//   async delete(id: string) {
-//     const attendance = await this.attendanceRepository.findOne({
-//       id,
-//     });
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  async update({
+    id,
+    schedulingDate,
+    serviceDate,
+    serviceTime,
+    value,
+    status,
+    client,
+    specialists,
+  }: IAttendance) {
+    const attendance = await this.attendanceRepository.findOne({
+      id,
+    });
 
-//     if (!attendance) {
-//       throw new Error('Attendance not found!');
-//     }
+    if (!attendance) {
+      throw new AppError(404, 'Attendance Not Found', 'Attendance Not Found!');
+    } else {
+      // Verificando se o Cliente é valido!
+      const clientId = client.toString();
+      const clientExists = await this.relationIsValid(clientId, 'CLIENT');
 
-//     this.attendanceRepository.delete({ id });
+      // Verificando se o Especialista é valido!
+      const specialistId = specialists.toString();
+      const specialistExists = await this.relationIsValid(
+        specialistId,
+        'SPECIALIST',
+      );
 
-//     return attendance;
-//   }
-// }
+      if (!clientExists) {
+        throw new AppError(404, 'Client Not Found', 'Client Not Found!');
+      } else if (!specialistExists) {
+        throw new AppError(
+          404,
+          'Specialist Not Found',
+          'Specialist Not Found!',
+        );
+      } else {
+        attendance.schedulingDate = schedulingDate;
+        attendance.serviceTime = serviceTime;
+        attendance.serviceDate = serviceDate;
+        attendance.value = value;
+        attendance.specialists = specialists;
+        attendance.client = client;
+        attendance.status = status.toUpperCase();
 
-// export { AttendancesService };
+        await this.attendanceRepository.save(attendance);
+
+        const attendanceNow = await this.attendanceRepository.findOne({
+          id,
+        });
+
+        return attendanceNow;
+      }
+    }
+  }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  async updateStatus(id: string, status: string) {
+    const attendance = await this.attendanceRepository.findOne({
+      id,
+    });
+
+    if (!attendance) {
+      throw new Error('Attendance not found!');
+    }
+
+    if (status === null || status === ' ' || status === undefined) {
+      throw new Error('The Status is mandatory!');
+    }
+
+    attendance.status = status;
+
+    await this.attendanceRepository.save(attendance);
+
+    const attendanceNow = await this.attendanceRepository.findOne({
+      id,
+    });
+
+    return attendanceNow;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  async delete(id: string) {
+    const attendance = await this.attendanceRepository.findOne({
+      id,
+    });
+
+    if (!attendance) {
+      throw new Error('Attendance not found!');
+    }
+
+    this.attendanceRepository.delete({ id });
+
+    return attendance;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  async listAll() {
+    const attendance = await this.attendanceRepository.find();
+    return attendance;
+  }
+}
+
+export { AttendancesService };
