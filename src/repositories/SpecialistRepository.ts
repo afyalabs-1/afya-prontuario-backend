@@ -1,7 +1,7 @@
-// import { EntityRepository, Repository } from 'typeorm';
-// import { Specialists } from '../models/specialists';
+import { EntityRepository, Repository } from 'typeorm';
+import { Specialists } from '../models/specialists';
 
-// @EntityRepository(Specialists)
-// class SpecialistRepository extends Repository<Specialists> {}
+@EntityRepository(Specialists)
+class SpecialistRepository extends Repository<Specialists> {}
 
-// export { SpecialistRepository };
+export { SpecialistRepository };

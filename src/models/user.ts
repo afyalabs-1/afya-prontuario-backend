@@ -1,7 +1,7 @@
 import * as bcrypt from 'bcrypt';
 import { Exclude } from 'class-transformer';
 import { IsEnum, IsOptional, IsString, Length } from 'class-validator';
-import { Column, Entity, OneToMany } from 'typeorm';
+import { Column, Entity, Index, OneToMany } from 'typeorm';
 import { Session } from './auth/session';
 import { BaseEntity } from './base_entity';
 
@@ -9,7 +9,6 @@ export class UserRole {
   static readonly USER = 'USER';
   static readonly ADMINISTRATOR = 'ADMINISTRATOR';
 }
-
 
 @Entity('users')
 @Index('IDX_PASSWORDRESETCODE_UNIQUE', ['passwordResetCode'], { unique: true })

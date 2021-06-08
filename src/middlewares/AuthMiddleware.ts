@@ -1,4 +1,4 @@
-import { NextFunction, Response } from 'express';
+import { NextFunction, Response, Request } from 'express';
 import jwt, { Secret } from 'jsonwebtoken';
 import authConfig from '../config/auth';
 import { AppError } from '../error/AppError';
@@ -19,7 +19,7 @@ export default function authMiddleware(
   if (!authHeader) {
     throw new AppError(
       401,
-      'Wrong password or user name',
+      'missing authorization',
       'Error > AuthMiddleware > Authenticate > missing authorization',
     );
   }
@@ -27,7 +27,7 @@ export default function authMiddleware(
   const [, token] = authHeader.split(' ');
 
   try {
-    const data = jwt.verify(token, authConfig.jwt.secret as Secret);
+    const data = jwt.verify(token, authConfig.jwt.secret);
 
     // const { sub } = data as ITokenPayload;
 
