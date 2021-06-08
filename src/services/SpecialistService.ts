@@ -95,15 +95,15 @@ class SpecialistService {
     });
   }
 
-  async delete(id: string) {
-    const deletedSpecialist = this.specialistRepository.delete(id);
+  // async delete(id: string) {
+  //   const deletedSpecialist = this.specialistRepository.delete(id);
 
-    if (deletedSpecialist) {
-      return deletedSpecialist;
-    } else {
-      return '';
-    }
-  }
+  //   if (deletedSpecialist) {
+  //     return deletedSpecialist;
+  //   } else {
+  //     return '';
+  //   }
+  // }
 }
 
 export { SpecialistService };
