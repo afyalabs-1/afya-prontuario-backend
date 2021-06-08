@@ -11,8 +11,11 @@ import { UserRouter } from './routes/UserRouter';
 const router = Router();
 
 router.get('/', (request, response) => {
-  return response.json({ message: 'Afya Challenge - Team 1' });
+  return response.json({
+    message: `Afya Challenge - Team 1 - Port - ${process.env.API_PORT}`,
+  });
 });
+
 
 router.use('/auth', AuthRouter);
 router.use('/users', UserRouter);

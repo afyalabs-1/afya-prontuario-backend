@@ -10,7 +10,9 @@ export class UserRole {
   static readonly ADMINISTRATOR = 'ADMINISTRATOR';
 }
 
+
 @Entity('users')
+@Index('IDX_PASSWORDRESETCODE_UNIQUE', ['passwordResetCode'], { unique: true })
 export class User extends BaseEntity<User> {
   @IsEnum(UserRole, { always: true })
   @Column({ type: 'enum', enum: UserRole, default: UserRole.USER })
