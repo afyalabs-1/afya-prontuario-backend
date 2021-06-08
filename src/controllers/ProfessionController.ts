@@ -78,7 +78,7 @@ class ProfessionController {
     try {
       const { id } = request.body;
       const professionService = new ProfessionService();
-      const deleteProfession = professionService.delete(id);
+      const deleteProfession = await professionService.delete(id);
 
       if (deleteProfession) {
         return response.json({

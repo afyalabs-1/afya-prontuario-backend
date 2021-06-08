@@ -79,7 +79,7 @@ class ClientService {
         return clients;
       }
     } catch {
-      throw new AppError(404, 'not found', 'ERROR > ClientsService > List');
+      throw new AppError(404, 'not found', 'ERROR > ClientService > List');
     }
   }
 

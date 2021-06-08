@@ -10,11 +10,35 @@
     "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/server.ts",
     "typeorm": "ts-node-dev node_modules/typeorm/cli.js",
     "start": "node dist/server.js",
-    "start:docker:dev": "npm install && npm run dev"
+    "start:docker:dev": "npm install && npm run dev",
+    "test": "jest"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "ts-jest"
+    },
+    "globals": {
+      "ts-jest": {
+        "tsConfigFile": "tsconfig.json"
+      }
+    },
+    "testMatch": [
+      "**/test/*.+(ts|tsx|js)"
+    ]
   },
   "devDependencies": {
+    "@jest-mock/express": "^1.4.1",
     "@types/bcrypt": "^5.0.0",
+    "@types/cors": "^2.8.10",
     "@types/express": "^4.17.11",
+    "@types/jest": "^26.0.23",
+    "@types/jsonwebtoken": "^8.5.1",
+    "@types/supertest": "^2.0.11",
     "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.16.1",
     "@typescript-eslint/parser": "^4.16.1",
@@ -26,19 +50,23 @@
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-promise": "4.2.1",
+    "jest": "^27.0.4",
     "prettier": "^2.2.1",
+    "ts-jest": "^27.0.0-next.12",
     "ts-node-dev": "^1.1.6",
-    "typescript": "^4.2.2"
+    "typescript": "^4.3.2"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
+    "cors": "^2.8.5",
     "date-fns": "^2.22.1",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
+    "jsonwebtoken": "^8.5.1",
     "nanoid": "^3.1.23",
     "pg": "^8.6.0",
     "reflect-metadata": "^0.1.13",
