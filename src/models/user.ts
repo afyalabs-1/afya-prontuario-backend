@@ -1,7 +1,15 @@
 import * as bcrypt from 'bcrypt';
 import { Exclude } from 'class-transformer';
 import { IsEnum, IsOptional, IsString, Length } from 'class-validator';
-import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany } from 'typeorm';
+import { nanoid } from 'nanoid/async';
+import {
+  BeforeInsert,
+  BeforeUpdate,
+  Column,
+  Entity,
+  Index,
+  OneToMany,
+} from 'typeorm';
 import { Session } from './auth/session';
 import { BaseEntity } from './base_entity';
 
@@ -19,7 +27,7 @@ export class User extends BaseEntity<User> {
   @IsString({ always: true })
   @Length(4, 20, { always: true })
   @Column({ type: 'varchar', length: 20, unique: true })
-  login: string;
+  userName: string;
 
   @IsOptional({ always: true })
   @Length(6, 255, { always: true })
@@ -43,11 +51,11 @@ export class User extends BaseEntity<User> {
   // @OneToMany(type => UserDevice, device => device.user)
   // devices: UserDevice[];
 
-  @Exclude()
-  currentToken: string; // used for logout
+  // @Exclude()
+  // playerId?: string; // used for app login
 
   @Exclude()
-  playerId?: string; // used for app login
+  currentToken: string; // used for logout
 
   async validatePassword(password: string): Promise<boolean> {
     if (await bcrypt.compare(password, this.password)) {
