@@ -1,15 +1,7 @@
 import * as bcrypt from 'bcrypt';
 import { Exclude } from 'class-transformer';
 import { IsEnum, IsOptional, IsString, Length } from 'class-validator';
-import { nanoid } from 'nanoid/async';
-import {
-  BeforeInsert,
-  BeforeUpdate,
-  Column,
-  Entity,
-  Index,
-  OneToMany,
-} from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 import { Session } from './auth/session';
 import { BaseEntity } from './base_entity';
 
@@ -18,7 +10,9 @@ export class UserRole {
   static readonly ADMINISTRATOR = 'ADMINISTRATOR';
 }
 
+
 @Entity('users')
+@Index('IDX_PASSWORDRESETCODE_UNIQUE', ['passwordResetCode'], { unique: true })
 export class User extends BaseEntity<User> {
   @IsEnum(UserRole, { always: true })
   @Column({ type: 'enum', enum: UserRole, default: UserRole.USER })
@@ -63,16 +57,5 @@ export class User extends BaseEntity<User> {
     }
 
     return false;
-  }
-
-  @BeforeInsert()
-  @BeforeUpdate()
-  async hashPassword() {
-    if (
-      this.password &&
-      (!this.password.startsWith('$2b$12$') || this.password.length !== 60)
-    ) {
-      this.password = await bcrypt.hash(this.password, 12);
-    }
   }
 }
