@@ -23,46 +23,46 @@ class SpecialistService {
   }
 
   async listAll(specialistName: string) {
-    var specialistList = null;
-    
+    let specialistList = null;
+
     if (specialistName) {
       specialistList = await this.specialistRepository.find({
-        where: { name: Like(`%${specialistName}%`)}
+        where: { name: Like(`%${specialistName}%`) },
       });
     } else {
       specialistList = await this.specialistRepository.find();
     }
-    
+
     if (specialistList) {
       return specialistList;
     } else {
       return new AppError(
         404,
         'Specialist not found!',
-        'Error > SpecialistService > listAll()'
+        'Error > SpecialistService > listAll()',
       );
     }
   }
 
   async create({
-      id,
-      record, 
-      name, 
+    id,
+    record,
+    name,
+    phoneNumber,
+    cellPhone,
+    email,
+    profession,
+  }: ISpecialist) {
+    const specialist = this.specialistRepository.create({
+      record,
+      name,
       phoneNumber,
       cellPhone,
       email,
-      profession
-    }: ISpecialist) { 
-    var specialist = this.specialistRepository.create({
-      record, 
-      name, 
-      phoneNumber,
-      cellPhone,
-      email,
-      profession
+      profession,
     });
 
-    let createdSpecialist = this.specialistRepository.save(specialist);
+    const createdSpecialist = this.specialistRepository.save(specialist);
 
     if (createdSpecialist) {
       return createdSpecialist;
@@ -70,39 +70,38 @@ class SpecialistService {
       return new AppError(
         404,
         'Profession not found!',
-        'Error > ProfessionController > create()'
+        'Error > ProfessionController > create()',
       );
     }
   }
-  
 
   async update({
     id,
-    record, 
-    name, 
+    record,
+    name,
     phoneNumber,
     cellPhone,
     email,
-    profession
+    profession,
   }: ISpecialist) {
     return this.specialistRepository.save({
       id,
-      record, 
-      name, 
+      record,
+      name,
       phoneNumber,
       cellPhone,
       email,
-      profession
+      profession,
     });
   }
 
   async delete(id: string) {
-    let deletedSpecialist = this.specialistRepository.delete(id);
+    const deletedSpecialist = this.specialistRepository.delete(id);
 
     if (deletedSpecialist) {
       return deletedSpecialist;
     } else {
-      return "";
+      return '';
     }
   }
 }

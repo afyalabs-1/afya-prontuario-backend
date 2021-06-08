@@ -32,8 +32,8 @@ export class Attendance extends BaseEntity<Attendance> {
   status: Status;
 
   @ManyToOne(() => Client, client => client.id)
-  client: Client;
+  client: Client[];
 
   @ManyToOne(() => Specialists, specialists => specialists.id)
-  specialists: Specialists;
+  specialists: Specialists[];
 }
