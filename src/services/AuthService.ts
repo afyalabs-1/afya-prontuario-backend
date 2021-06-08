@@ -4,6 +4,7 @@ import { User } from '../models/user';
 import { UserRepository } from '../repositories/UserRepository';
 import * as bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import authConfig from '../config/auth';
 
 interface IUser {
   userName: string;
@@ -46,8 +47,8 @@ class AuthService {
       );
     }
 
-    const token = jwt.sign({ id: user.id }, `secret`, {
-      expiresIn: `1d`,
+    const token = jwt.sign({ id: user.id }, authConfig.jwt.secret, {
+      expiresIn: authConfig.jwt.expiresIn,
     });
 
     const status = 'ACTIVE';
