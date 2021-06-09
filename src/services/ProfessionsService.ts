@@ -1,8 +1,6 @@
 import { getCustomRepository, Repository, Like } from 'typeorm';
-import { Profession } from '../models/profession';
 import { ProfessionRepository } from '../repositories/ProfessionRepository';
 import { AppError } from '../error/AppError';
-import { Request, Response } from 'express';
 
 interface IProfession {
   name: string;
