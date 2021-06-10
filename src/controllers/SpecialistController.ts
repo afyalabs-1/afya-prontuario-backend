@@ -118,7 +118,7 @@ class SpecialistController {
         try {
             const { id } = request.body;
             const specialistService = new SpecialistService();
-            const deletedService = specialistService.delete(id);
+            const deletedService = await specialistService.delete(id);
 
             if (deletedService) {
                 return response.json({
