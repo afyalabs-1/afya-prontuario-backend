@@ -14,33 +14,33 @@ class ProfessionService {
   }
 
   async listAll(professionName: string) {
-    var professionList = null;
-    
+    let professionList = null;
+
     if (professionName) {
       professionList = await this.professionRepository.find({
-        where: { name: Like(`%${professionName}%`)}
+        where: { name: Like(`%${professionName}%`) },
       });
     } else {
       professionList = await this.professionRepository.find();
     }
-    
+
     if (professionList) {
       return professionList;
     } else {
       return new AppError(
         404,
         'Profession not found!',
-        'Error > ProfessionController > listAll()'
+        'Error > ProfessionController > listAll()',
       );
     }
   }
 
   async create(name: string) {
-    var profession = this.professionRepository.create({
-      name
+    const profession = this.professionRepository.create({
+      name,
     });
 
-    let createdProfession = this.professionRepository.save(profession);
+    const createdProfession = this.professionRepository.save(profession);
 
     if (createdProfession) {
       return createdProfession;
@@ -48,7 +48,7 @@ class ProfessionService {
       return new AppError(
         404,
         'Profession not found!',
-        'Error > ProfessionController > create()'
+        'Error > ProfessionController > create()',
       );
     }
   }
@@ -58,7 +58,7 @@ class ProfessionService {
   }
 
   async delete(id: string) {
-    let deletedProfession = this.professionRepository.delete(id);
+    const deletedProfession = this.professionRepository.delete(id);
 
     if (deletedProfession) {
       return deletedProfession;
@@ -66,7 +66,7 @@ class ProfessionService {
       return new AppError(
         404,
         'Profession not found!',
-        'Error > ProfessionController > delete()'
+        'Error > ProfessionController > delete()',
       );
     }
   }

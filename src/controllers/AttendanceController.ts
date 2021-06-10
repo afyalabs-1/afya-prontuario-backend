@@ -9,8 +9,8 @@ class AttendanceController {
       serviceDate,
       serviceTime,
       value,
-      idClient,
-      idSpecialist,
+      client,
+      specialists,
       status,
     } = request.body;
 
@@ -27,9 +27,9 @@ class AttendanceController {
       serviceDate,
       serviceTime,
       value,
-      idClient,
-      idSpecialist,
       status,
+      client,
+      specialists,
     });
 
     if (attendance) {
@@ -41,23 +41,6 @@ class AttendanceController {
     }
   }
 
-  async listAll(request: Request, response: Response): Promise<Response> {
-    const { schedulingDate, serviceDate, idClient, idSpecialist, status } =
-      request.body;
-
-    const attendancesService = new AttendancesService();
-
-    const attendances = await attendancesService.listAll({
-      schedulingDate,
-      serviceDate,
-      idClient,
-      idSpecialist,
-      status,
-    });
-
-    return response.json(attendances);
-  }
-
   async update(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
@@ -66,8 +49,8 @@ class AttendanceController {
       serviceDate,
       serviceTime,
       value,
-      idClient,
-      idSpecialist,
+      client,
+      specialists,
       status,
     } = request.body;
 
@@ -86,8 +69,8 @@ class AttendanceController {
         serviceDate,
         serviceTime,
         value,
-        idClient,
-        idSpecialist,
+        client,
+        specialists,
         status,
       });
 
@@ -112,6 +95,104 @@ class AttendanceController {
 
     try {
       const attendance = await attendanceService.updateStatus(id, status);
+
+      return response.json(attendance);
+    } catch (error) {
+      return response.status(400).json({
+        message: error.message,
+      });
+    }
+  }
+
+  async listScheduling(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    console.log('Passando no listScheduling');
+
+    const { schedulingDate } = request.body;
+
+    const newDate = new Date(schedulingDate);
+
+    const attendanceService = new AttendancesService();
+
+    try {
+      const attendance = await attendanceService.listScheduling(newDate);
+
+      return response.json(attendance);
+    } catch (error) {
+      return response.status(400).json({
+        message: error.message,
+      });
+    }
+  }
+
+  async listService(request: Request, response: Response): Promise<Response> {
+    console.log('Passando no listService');
+    const { serviceDate } = request.body;
+
+    const newDate = new Date(serviceDate);
+
+    const attendanceService = new AttendancesService();
+
+    try {
+      const attendance = await attendanceService.listService(newDate);
+
+      return response.json(attendance);
+    } catch (error) {
+      return response.status(400).json({
+        message: error.message,
+      });
+    }
+  }
+
+  async listClient(request: Request, response: Response): Promise<Response> {
+    console.log('Passando no listClient');
+    const { clientId } = request.body;
+
+    const attendanceService = new AttendancesService();
+
+    try {
+      const attendance = await attendanceService.listClient(clientId);
+
+      return response.json(attendance);
+    } catch (error) {
+      return response.status(400).json({
+        message: error.message,
+      });
+    }
+  }
+
+  async listSpecialist(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    console.log('Passando no listSpecialist');
+    const { specialistsId } = request.body;
+
+    const attendanceService = new AttendancesService();
+
+    try {
+      const attendance = await attendanceService.listSpecialist(specialistsId);
+
+      return response.json(attendance);
+    } catch (error) {
+      return response.status(400).json({
+        message: error.message,
+      });
+    }
+  }
+
+  async listStatus(request: Request, response: Response): Promise<Response> {
+    console.log('Passando no Status');
+    const { status } = request.body;
+
+    const attendanceService = new AttendancesService();
+
+    try {
+      const attendance = await attendanceService.listStatus(
+        status.toUpperCase(),
+      );
 
       return response.json(attendance);
     } catch (error) {
@@ -151,6 +232,14 @@ class AttendanceController {
         message: error.message,
       });
     }
+  }
+
+  async listAll(request: Request, response: Response): Promise<Response> {
+    const attendanceService = new AttendancesService();
+
+    const attendance = await attendanceService.listAll();
+
+    return response.json(attendance);
   }
 }
 

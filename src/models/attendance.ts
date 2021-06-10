@@ -1,5 +1,7 @@
+import { Specialists } from './specialists';
+import { Client } from './client';
 import 'reflect-metadata';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, ManyToOne } from 'typeorm';
 import { BaseEntity } from './base_entity';
 import { IsOptional } from 'class-validator';
 
@@ -29,9 +31,9 @@ export class Attendance extends BaseEntity<Attendance> {
   @Column({ type: 'enum', enum: Status, nullable: true })
   status: Status;
 
-  @Column({ nullable: true })
-  idClient: string;
+  @ManyToOne(() => Client, client => client.id)
+  client: Client[];
 
-  @Column({ nullable: true })
-  idSpecialist: string;
+  @ManyToOne(() => Specialists, specialists => specialists.id)
+  specialists: Specialists[];
 }
