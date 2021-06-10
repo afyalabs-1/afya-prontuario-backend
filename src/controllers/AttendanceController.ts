@@ -108,8 +108,6 @@ class AttendanceController {
     request: Request,
     response: Response,
   ): Promise<Response> {
-    console.log('Passando no listScheduling');
-
     const { schedulingDate } = request.body;
 
     const newDate = new Date(schedulingDate);
@@ -128,7 +126,6 @@ class AttendanceController {
   }
 
   async listService(request: Request, response: Response): Promise<Response> {
-    console.log('Passando no listService');
     const { serviceDate } = request.body;
 
     const newDate = new Date(serviceDate);
@@ -147,7 +144,6 @@ class AttendanceController {
   }
 
   async listClient(request: Request, response: Response): Promise<Response> {
-    console.log('Passando no listClient');
     const { clientId } = request.body;
 
     const attendanceService = new AttendancesService();
@@ -167,7 +163,6 @@ class AttendanceController {
     request: Request,
     response: Response,
   ): Promise<Response> {
-    console.log('Passando no listSpecialist');
     const { specialistsId } = request.body;
 
     const attendanceService = new AttendancesService();
@@ -184,7 +179,6 @@ class AttendanceController {
   }
 
   async listStatus(request: Request, response: Response): Promise<Response> {
-    console.log('Passando no Status');
     const { status } = request.body;
 
     const attendanceService = new AttendancesService();
