@@ -2,10 +2,13 @@ import { getCustomRepository, Repository } from 'typeorm';
 import { Attendance } from './../models/attendance';
 import { Client } from './../models/client';
 import { Specialists } from './../models/specialists';
+import { MedicalRecord } from './../models/medicalRecord';
 
 import { AttendanceRepository } from '../repositories/AttendancesRepository';
 import { ClientRepository } from '../repositories/ClientsRepository';
 import { SpecialistRepository } from '../repositories/SpecialistRepository';
+import { MedicalRecordRepository } from '../repositories/MedicalRecordRepository';
+
 import { AppError } from '../error/AppError';
 
 interface IAttendance {
@@ -23,11 +26,13 @@ class AttendancesService {
   private attendanceRepository: Repository<Attendance>;
   private clientRepository: Repository<Client>;
   private specialistRepository: Repository<Specialists>;
+  private medicalRecordRepository: Repository<MedicalRecord>;
 
   constructor() {
     this.attendanceRepository = getCustomRepository(AttendanceRepository);
     this.clientRepository = getCustomRepository(ClientRepository);
     this.specialistRepository = getCustomRepository(SpecialistRepository);
+    this.medicalRecordRepository = getCustomRepository(MedicalRecordRepository);
   }
 
   // Validando Cliente e Especialista
@@ -35,6 +40,7 @@ class AttendancesService {
   async relationIsValid(identify: string, relation: string) {
     if (relation.toUpperCase() === 'CLIENT') {
       const clientId = identify;
+
       const exists = await this.clientRepository.findOne({
         where: { id: clientId },
       });
@@ -45,6 +51,25 @@ class AttendancesService {
         where: { id: specialistId },
       });
       return exists;
+    }
+  }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  async createMedicalRecord(client: string) {
+    // Verifico se o Cliente já tem Prontuario
+    const medicalRecordExists = await this.medicalRecordRepository.findOne({
+      where: { client: client },
+    });
+
+    if (!medicalRecordExists) {
+      const openDate = new Date();
+
+      const medicalRecord = this.medicalRecordRepository.create({
+        client,
+        openDate,
+      });
+
+      await this.medicalRecordRepository.save(medicalRecord);
     }
   }
 
@@ -182,6 +207,7 @@ class AttendancesService {
     } else {
       // Verificando se o Cliente é valido!
       const clientId = client.toString();
+
       const clientExists = await this.relationIsValid(clientId, 'CLIENT');
 
       // Verificando se o Especialista é valido!
@@ -210,6 +236,12 @@ class AttendancesService {
 
         await this.attendanceRepository.save(attendance);
 
+        // Quando o Status for REALIZADO (ACCOMPLISHED), criar o Prontuário
+        if (status.toUpperCase() === 'ACCOMPLISHED') {
+          const clientId = client.toString();
+          await this.createMedicalRecord(clientId);
+        }
+
         const attendanceNow = await this.attendanceRepository.findOne({
           id,
         });
@@ -233,7 +265,13 @@ class AttendancesService {
       throw new Error('The Status is mandatory!');
     }
 
-    attendance.status = status;
+    attendance.status = status.toUpperCase();
+
+    // Quando o Status for REALIZADO (ACCOMPLISHED), criar o Prontuário
+    if (status.toUpperCase() === 'ACCOMPLISHED') {
+      const clientId = attendance.client.toString();
+      await this.createMedicalRecord(clientId);
+    }
 
     await this.attendanceRepository.save(attendance);
 
