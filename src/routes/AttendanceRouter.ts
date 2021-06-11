@@ -1,7 +1,10 @@
 import { Router } from 'express';
 import { AttendanceController } from '../controllers/AttendanceController';
+// import authMiddleware from '../middlewares/AuthMiddleware';
 
 const attendanceRouter = Router();
+
+// attendanceRouter.use(authMiddleware);
 
 const attendanceController = new AttendanceController();
 
@@ -14,8 +17,9 @@ attendanceRouter.get('/client/', attendanceController.listClient);
 attendanceRouter.get('/specialist/', attendanceController.listSpecialist);
 attendanceRouter.get('/status/', attendanceController.listStatus);
 attendanceRouter.get('/:id', attendanceController.listId);
+
 attendanceRouter.put('/:id', attendanceController.update);
-attendanceRouter.put('/', attendanceController.updateStatus);
+
 attendanceRouter.delete('/:id', attendanceController.delete);
 
 export { attendanceRouter };

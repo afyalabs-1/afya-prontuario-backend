@@ -7,6 +7,7 @@ import { professionRouter } from './routes/ProfessionRouter';
 import { specialistRouter } from './routes/SpecialistRouter';
 import { AuthRouter } from './routes/AuthRouter';
 import { UserRouter } from './routes/UserRouter';
+import { medicalRecordDetailRouter } from './routes/MedicalRecordDetailRouter';
 
 const router = Router();
 
@@ -23,5 +24,6 @@ router.use('/clients', ClientRouter);
 router.use('/address', AddressRouter);
 router.use('/professions', professionRouter);
 router.use('/specialists', specialistRouter);
+router.use('/medicalrecord', medicalRecordDetailRouter);
 
 export { router };

@@ -3,6 +3,7 @@ import { IsEmail, IsOptional, Length } from 'class-validator';
 import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { BaseEntity } from './base_entity';
 import { Attendance } from './attendance';
+import { MedicalRecordDetail } from './medicalRecordDetail';
 
 @Entity('specialists')
 export class Specialists extends BaseEntity<Specialists> {
@@ -30,4 +31,10 @@ export class Specialists extends BaseEntity<Specialists> {
 
   @OneToMany(() => Attendance, attendance => attendance.specialists)
   attendance: Attendance[];
+
+  @OneToMany(
+    () => MedicalRecordDetail,
+    medicalRecordDetail => medicalRecordDetail.specialists,
+  )
+  medicalRecordDetail: MedicalRecordDetail[];
 }

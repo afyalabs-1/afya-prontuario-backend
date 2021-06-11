@@ -55,10 +55,12 @@ class AttendancesService {
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  async createMedicalRecord(client: string) {
+  async createMedicalRecord(client: []) {
     // Verifico se o Cliente já tem Prontuario
+    const clientId = client.toString();
+
     const medicalRecordExists = await this.medicalRecordRepository.findOne({
-      where: { client: client },
+      where: { client: clientId },
     });
 
     if (!medicalRecordExists) {
@@ -238,8 +240,7 @@ class AttendancesService {
 
         // Quando o Status for REALIZADO (ACCOMPLISHED), criar o Prontuário
         if (status.toUpperCase() === 'ACCOMPLISHED') {
-          const clientId = client.toString();
-          await this.createMedicalRecord(clientId);
+          await this.createMedicalRecord(client);
         }
 
         const attendanceNow = await this.attendanceRepository.findOne({
@@ -252,37 +253,6 @@ class AttendancesService {
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  async updateStatus(id: string, status: string) {
-    const attendance = await this.attendanceRepository.findOne({
-      id,
-    });
-
-    if (!attendance) {
-      throw new Error('Attendance not found!');
-    }
-
-    if (status === null || status === ' ' || status === undefined) {
-      throw new Error('The Status is mandatory!');
-    }
-
-    attendance.status = status.toUpperCase();
-
-    // Quando o Status for REALIZADO (ACCOMPLISHED), criar o Prontuário
-    if (status.toUpperCase() === 'ACCOMPLISHED') {
-      const clientId = attendance.client.toString();
-      await this.createMedicalRecord(clientId);
-    }
-
-    await this.attendanceRepository.save(attendance);
-
-    const attendanceNow = await this.attendanceRepository.findOne({
-      id,
-    });
-
-    return attendanceNow;
-  }
-
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async delete(id: string) {
     const attendance = await this.attendanceRepository.findOne({
       id,
@@ -292,7 +262,7 @@ class AttendancesService {
       throw new Error('Attendance not found!');
     }
 
-    this.attendanceRepository.delete({ id });
+    await this.attendanceRepository.delete({ id });
 
     return attendance;
   }
