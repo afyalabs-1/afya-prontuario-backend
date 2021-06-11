@@ -8,6 +8,7 @@ class SpecialistController {
       const specialistName = (request.query as any).name;
       const specialistService = new SpecialistService();
       const specialists = await specialistService.listAll(specialistName);
+
       if (specialists) {
         return response.json({
           statusCode: 200,
@@ -33,6 +34,7 @@ class SpecialistController {
     try {
       const { id, record, name, phoneNumber, cellPhone, email, profession } =
         request.body;
+
       const specialistService = new SpecialistService();
       const createdSpecialist = await specialistService.create({
         id,
@@ -43,6 +45,7 @@ class SpecialistController {
         email,
         profession,
       });
+
       if (createdSpecialist) {
         return response.json({
           statusCode: 201,
@@ -63,6 +66,7 @@ class SpecialistController {
     try {
       const { id, record, name, phoneNumber, cellPhone, email, profession } =
         request.body;
+
       const specialistService = new SpecialistService();
       const updatedSpecialist = await specialistService.update({
         id,
@@ -73,6 +77,7 @@ class SpecialistController {
         email,
         profession,
       });
+
       if (updatedSpecialist) {
         return response.json({
           statusCode: 200,
@@ -95,32 +100,33 @@ class SpecialistController {
     }
   }
 
-  // async delete(request: Request, response: Response) {
-  //   try {
-  //     const { id } = request.body;
-  //     const specialistService = new SpecialistService();
-  //     const deletedService = specialistService.delete(id);
-  //     if (deletedService) {
-  //       return response.json({
-  //         statusCode: 201,
-  //         message: `Specialist deleted!`,
-  //         log: 'Success > SpecialistController > create',
-  //       });
-  //     } else {
-  //       return new AppError(
-  //         404,
-  //         'Specialist not found!',
-  //         'Error > SpecialistService > delete()',
-  //       );
-  //     }
-  //   } catch (err) {
-  //     throw new AppError(
-  //       500,
-  //       'Specialist not found!',
-  //       'Error > SpecialistController > delete',
-  //     );
-  //   }
-  // }
+  async delete(request: Request, response: Response) {
+    try {
+      const { id } = request.body;
+      const specialistService = new SpecialistService();
+      const deletedService = await specialistService.delete(id);
+
+      if (deletedService) {
+        return response.json({
+          statusCode: 201,
+          message: `Specialist deleted!`,
+          log: 'Success > SpecialistController > create',
+        });
+      } else {
+        return new AppError(
+          404,
+          'Specialist not found!',
+          'Error > SpecialistService > delete()',
+        );
+      }
+    } catch (err) {
+      throw new AppError(
+        500,
+        'Specialist not found!',
+        'Error > SpecialistController > delete',
+      );
+    }
+  }
 }
 
 export { SpecialistController };

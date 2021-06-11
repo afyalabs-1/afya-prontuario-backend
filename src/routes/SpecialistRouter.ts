@@ -1,12 +1,15 @@
 import { Router } from 'express';
 import { SpecialistController } from '../controllers/SpecialistController';
+import authMiddleware from '../middlewares/AuthMiddleware';
 
 const specialistRouter = Router();
 const specialistController = new SpecialistController();
 
+specialistRouter.use(authMiddleware);
+
 specialistRouter.get('/', specialistController.listAll);
 specialistRouter.post('/', specialistController.create);
 specialistRouter.post('/update', specialistController.update);
-// specialistRouter.post('/delete', specialistController.delete);
+specialistRouter.post('/delete', specialistController.delete);
 
 export { specialistRouter };

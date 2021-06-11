@@ -41,75 +41,73 @@ class AttendanceController {
     }
   }
 
-  async update(request: Request, response: Response): Promise<Response> {
-    const { id } = request.params;
+  // async update(request: Request, response: Response): Promise<Response> {
+  //   const { id } = request.params;
 
-    const {
-      schedulingDate,
-      serviceDate,
-      serviceTime,
-      value,
-      client,
-      specialists,
-      status,
-    } = request.body;
+  //   const {
+  //     schedulingDate,
+  //     serviceDate,
+  //     serviceTime,
+  //     value,
+  //     client,
+  //     specialists,
+  //     status,
+  //   } = request.body;
 
-    // Checando se a data de agendamento é menor que a data atual
-    const hourStart = startOfHour(parseISO(serviceDate));
-    if (isBefore(hourStart, new Date())) {
-      return response.status(400).json({ error: 'Date are not permitted' });
-    }
+  //   // Checando se a data de agendamento é menor que a data atual
+  //   const hourStart = startOfHour(parseISO(serviceDate));
+  //   if (isBefore(hourStart, new Date())) {
+  //     return response.status(400).json({ error: 'Date are not permitted' });
+  //   }
 
-    const attendanceService = new AttendancesService();
+  //   const attendanceService = new AttendancesService();
 
-    try {
-      const attendance = await attendanceService.update({
-        id,
-        schedulingDate,
-        serviceDate,
-        serviceTime,
-        value,
-        client,
-        specialists,
-        status,
-      });
+  //   try {
+  //     const attendance = await attendanceService.update({
+  //       id,
+  //       schedulingDate,
+  //       serviceDate,
+  //       serviceTime,
+  //       value,
+  //       client,
+  //       specialists,
+  //       status,
+  //     });
 
-      if (attendance) {
-        return response.status(200).json(attendance);
-      } else {
-        return response.status(404).json({
-          message: 'ERROR when updating Attendance!',
-        });
-      }
-    } catch (error) {
-      return response.status(400).json({
-        message: error.message,
-      });
-    }
-  }
+  //     if (attendance) {
+  //       return response.status(200).json(attendance);
+  //     } else {
+  //       return response.status(404).json({
+  //         message: 'ERROR when updating Attendance!',
+  //       });
+  //     }
+  //   } catch (error) {
+  //     return response.status(400).json({
+  //       message: error.message,
+  //     });
+  //   }
+  // }
 
-  async updateStatus(request: Request, response: Response): Promise<Response> {
-    const { id, status } = request.body;
+  // async updateStatus(request: Request, response: Response): Promise<Response> {
+  //   const { id, status } = request.body;
 
-    const attendanceService = new AttendancesService();
+  //   const attendanceService = new AttendancesService();
 
-    try {
-      const attendance = await attendanceService.updateStatus(id, status);
+  //   try {
+  //     const attendance = await attendanceService.updateStatus(id, status);
 
-      return response.json(attendance);
-    } catch (error) {
-      return response.status(400).json({
-        message: error.message,
-      });
-    }
-  }
+  //     return response.json(attendance);
+  //   } catch (error) {
+  //     return response.status(400).json({
+  //       message: error.message,
+  //     });
+  //   }
+  // }
 
   async listScheduling(
     request: Request,
     response: Response,
   ): Promise<Response> {
-    console.log('Passando no listScheduling');
-
     const { schedulingDate } = request.body;
 
     const newDate = new Date(schedulingDate);
@@ -128,7 +126,6 @@ class AttendanceController {
   }
 
   async listService(request: Request, response: Response): Promise<Response> {
-    console.log('Passando no listService');
     const { serviceDate } = request.body;
 
     const newDate = new Date(serviceDate);
@@ -147,7 +144,6 @@ class AttendanceController {
   }
 
   async listClient(request: Request, response: Response): Promise<Response> {
-    console.log('Passando no listClient');
     const { clientId } = request.body;
 
     const attendanceService = new AttendancesService();
@@ -167,7 +163,6 @@ class AttendanceController {
     request: Request,
     response: Response,
   ): Promise<Response> {
-    console.log('Passando no listSpecialist');
     const { specialistsId } = request.body;
 
     const attendanceService = new AttendancesService();
@@ -184,7 +179,6 @@ class AttendanceController {
   }
 
   async listStatus(request: Request, response: Response): Promise<Response> {
-    console.log('Passando no Status');
     const { status } = request.body;
 
     const attendanceService = new AttendancesService();
