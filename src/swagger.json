@@ -1,0 +1,110 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Afya Challeng - Team 1",
+    "description": "Sistema para um consultório controlar o cadastro de seus clientes, atendimentos e prontuário de pacientes",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/attendances": {
+      "post": {
+        "tags": ["Attendance"],
+        "summary": "Create a new Attendance",
+        "description": "Create a new Attendance",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "schedulingDate": {
+                    "type": "Date"
+                  },
+                  "serviceDate": {
+                    "type": "Date"
+                  },
+                  "serviceTime": {
+                    "type": "Date"
+                  },
+                  "value": {
+                    "type": "string"
+                  },
+                  "client": {
+                    "type": "string"
+                  },
+                  "specialists": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "schedulingDate": "2021-06-11",
+                  "serviceDate": "2021-06-25",
+                  "serviceTime": "2021-06-25 18:30:05",
+                  "value": 100,
+                  "client": "client test",
+                  "specialists": "specialist test",
+                  "status": "SCHEDULED"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "404": {
+            "description": "Client or Specialist Not Found"
+          }
+
+        }
+      },
+      "get": {
+        "tags": ["Attendance"],
+        "summary": "List all attendences",
+        "description": "List all attendences",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "schedulingDate": {
+                        "type": "Date"
+                      },
+                      "serviceDate": {
+                        "type": "Date"
+                      },
+                      "serviceTime": {
+                        "type": "Date"
+                      },
+                      "value": {
+                        "type": "string"
+                      },
+                      "client": {
+                        "type": "string"
+                      },
+                      "specialists": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

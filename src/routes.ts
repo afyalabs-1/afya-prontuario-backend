@@ -1,4 +1,6 @@
 import { Router } from 'express';
+import swaggerUi from 'swagger-ui-express';
+import swaggerFile from './swagger.json';
 
 import { AddressRouter } from './routes/AddressRouter';
 import { ClientRouter } from './routes/ClientRouter';
@@ -16,6 +18,8 @@ router.get('/', (request, response) => {
     message: `Afya Challenge - Team 1 - Port - ${process.env.API_PORT}`,
   });
 });
+
+router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 router.use('/auth', AuthRouter);
 router.use('/users', UserRouter);
