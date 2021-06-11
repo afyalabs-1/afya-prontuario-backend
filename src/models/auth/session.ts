@@ -15,6 +15,10 @@ export class Session extends BaseEntity<Session> {
   @ManyToOne(type => User, user => user.sessions, { onDelete: 'CASCADE' })
   user: User;
 
+  @IsString()
+  @Column({ type: 'varchar' })
+  token: string;
+
   @Exclude()
   @IsString()
   @Column({ length: 255, nullable: true })

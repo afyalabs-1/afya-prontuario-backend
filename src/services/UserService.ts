@@ -1,10 +1,4 @@
-import {
-  getCustomRepository,
-  Like,
-  Repository,
-  EntityRepository,
-  Repository,
-} from 'typeorm';
+import { getCustomRepository, Like, Repository } from 'typeorm';
 import { AppError } from '../error/AppError';
 import { User } from '../models/user';
 import { UserRepository } from '../repositories/UserRepository';

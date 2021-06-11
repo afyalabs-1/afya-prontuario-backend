@@ -16,7 +16,6 @@ router.get('/', (request, response) => {
   });
 });
 
-
 router.use('/auth', AuthRouter);
 router.use('/users', UserRouter);
 router.use('/attendances', attendanceRouter);

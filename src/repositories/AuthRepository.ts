@@ -1,7 +1,7 @@
-// import { EntityRepository, Repository } from 'typeorm';
-// import { Session } from '../models/auth/session';
+import { EntityRepository, Repository } from 'typeorm';
+import { Session } from '../models/auth/session';
 
-// @EntityRepository(Session)
-// class AuthRepository extends Repository<Session> {}
+@EntityRepository(Session)
+class AuthRepository extends Repository<Session> {}
 
-// export { AuthRepository };
+export { AuthRepository };
