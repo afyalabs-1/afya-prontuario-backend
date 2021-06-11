@@ -1,7 +1,8 @@
 import { Specialists } from './specialists';
+import { MedicalRecordDetail } from './medicalRecordDetail';
 import { Client } from './client';
 import 'reflect-metadata';
-import { Column, Entity, ManyToOne } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { BaseEntity } from './base_entity';
 import { IsOptional } from 'class-validator';
 
@@ -36,4 +37,10 @@ export class Attendance extends BaseEntity<Attendance> {
 
   @ManyToOne(() => Specialists, specialists => specialists.id)
   specialists: Specialists[];
+
+  @OneToMany(
+    () => MedicalRecordDetail,
+    medicalRecordDetail => medicalRecordDetail.attendance,
+  )
+  medicalRecordDetail: MedicalRecordDetail[];
 }

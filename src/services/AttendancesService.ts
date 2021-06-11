@@ -54,24 +54,26 @@ class AttendancesService {
     }
   }
 
-  // // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  // async createMedicalRecord(client: string) {
-  //   // Verifico se o Cliente já tem Prontuario
-  //   const medicalRecordExists = await this.medicalRecordRepository.findOne({
-  //     where: { client: client },
-  //   });
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  async createMedicalRecord(client: []) {
+    // Verifico se o Cliente já tem Prontuario
+    const clientId = client.toString();
 
-  //   if (!medicalRecordExists) {
-  //     const openDate = new Date();
+    const medicalRecordExists = await this.medicalRecordRepository.findOne({
+      where: { client: clientId },
+    });
 
-  //     const medicalRecord = this.medicalRecordRepository.create({
-  //       client,
-  //       openDate,
-  //     });
+    if (!medicalRecordExists) {
+      const openDate = new Date();
 
-  //     await this.medicalRecordRepository.save(medicalRecord);
-  //   }
-  // }
+      const medicalRecord = this.medicalRecordRepository.create({
+        client,
+        openDate,
+      });
+
+      await this.medicalRecordRepository.save(medicalRecord);
+    }
+  }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async create({
@@ -187,100 +189,68 @@ class AttendancesService {
     return attendance;
   }
 
-  // // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  // async update({
-  //   id,
-  //   schedulingDate,
-  //   serviceDate,
-  //   serviceTime,
-  //   value,
-  //   status,
-  //   client,
-  //   specialists,
-  // }: IAttendance) {
-  //   const attendance = await this.attendanceRepository.findOne({
-  //     id,
-  //   });
-
-  //   if (!attendance) {
-  //     throw new AppError(404, 'Attendance Not Found', 'Attendance Not Found!');
-  //   } else {
-  //     // Verificando se o Cliente é valido!
-  //     const clientId = client.toString();
-
-  //     const clientExists = await this.relationIsValid(clientId, 'CLIENT');
-
-  //     // Verificando se o Especialista é valido!
-  //     const specialistId = specialists.toString();
-  //     const specialistExists = await this.relationIsValid(
-  //       specialistId,
-  //       'SPECIALIST',
-  //     );
-
-  //     if (!clientExists) {
-  //       throw new AppError(404, 'Client Not Found', 'Client Not Found!');
-  //     } else if (!specialistExists) {
-  //       throw new AppError(
-  //         404,
-  //         'Specialist Not Found',
-  //         'Specialist Not Found!',
-  //       );
-  //     } else {
-  //       attendance.schedulingDate = schedulingDate;
-  //       attendance.serviceTime = serviceTime;
-  //       attendance.serviceDate = serviceDate;
-  //       attendance.value = value;
-  //       attendance.specialists = specialists;
-  //       attendance.client = client;
-  //       attendance.status = status.toUpperCase();
-
-  //       await this.attendanceRepository.save(attendance);
-
-  //       // Quando o Status for REALIZADO (ACCOMPLISHED), criar o Prontuário
-  //       if (status.toUpperCase() === 'ACCOMPLISHED') {
-  //         const clientId = client.toString();
-  //         await this.createMedicalRecord(clientId);
-  //       }
-
-  //       const attendanceNow = await this.attendanceRepository.findOne({
-  //         id,
-  //       });
-
-  //       return attendanceNow;
-  //     }
-  //   }
-  // }
-
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  // async updateStatus(id: string, status: string) {
-  //   const attendance = await this.attendanceRepository.findOne({
-  //     id,
-  //   });
+  async update({
+    id,
+    schedulingDate,
+    serviceDate,
+    serviceTime,
+    value,
+    status,
+    client,
+    specialists,
+  }: IAttendance) {
+    const attendance = await this.attendanceRepository.findOne({
+      id,
+    });
 
-  //   if (!attendance) {
-  //     throw new Error('Attendance not found!');
-  //   }
+    if (!attendance) {
+      throw new AppError(404, 'Attendance Not Found', 'Attendance Not Found!');
+    } else {
+      // Verificando se o Cliente é valido!
+      const clientId = client.toString();
 
-  //   if (status === null || status === ' ' || status === undefined) {
-  //     throw new Error('The Status is mandatory!');
-  //   }
+      const clientExists = await this.relationIsValid(clientId, 'CLIENT');
 
-  //   attendance.status = status.toUpperCase();
+      // Verificando se o Especialista é valido!
+      const specialistId = specialists.toString();
+      const specialistExists = await this.relationIsValid(
+        specialistId,
+        'SPECIALIST',
+      );
 
-  //   // Quando o Status for REALIZADO (ACCOMPLISHED), criar o Prontuário
-  //   if (status.toUpperCase() === 'ACCOMPLISHED') {
-  //     const clientId = attendance.client.toString();
-  //     await this.createMedicalRecord(clientId);
-  //   }
+      if (!clientExists) {
+        throw new AppError(404, 'Client Not Found', 'Client Not Found!');
+      } else if (!specialistExists) {
+        throw new AppError(
+          404,
+          'Specialist Not Found',
+          'Specialist Not Found!',
+        );
+      } else {
+        attendance.schedulingDate = schedulingDate;
+        attendance.serviceTime = serviceTime;
+        attendance.serviceDate = serviceDate;
+        attendance.value = value;
+        attendance.specialists = specialists;
+        attendance.client = client;
+        attendance.status = status.toUpperCase();
 
-  //   await this.attendanceRepository.save(attendance);
+        await this.attendanceRepository.save(attendance);
 
-  //   const attendanceNow = await this.attendanceRepository.findOne({
-  //     id,
-  //   });
+        // Quando o Status for REALIZADO (ACCOMPLISHED), criar o Prontuário
+        if (status.toUpperCase() === 'ACCOMPLISHED') {
+          await this.createMedicalRecord(client);
+        }
 
-  //   return attendanceNow;
-  // }
+        const attendanceNow = await this.attendanceRepository.findOne({
+          id,
+        });
+
+        return attendanceNow;
+      }
+    }
+  }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async delete(id: string) {
@@ -292,7 +262,7 @@ class AttendancesService {
       throw new Error('Attendance not found!');
     }
 
-    this.attendanceRepository.delete({ id });
+    await this.attendanceRepository.delete({ id });
 
     return attendance;
   }
