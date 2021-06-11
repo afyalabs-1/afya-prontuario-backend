@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import { AttendanceController } from '../controllers/AttendanceController';
-// import authMiddleware from '../middlewares/AuthMiddleware';
+import authMiddleware from '../middlewares/AuthMiddleware';
 
 const attendanceRouter = Router();
 
-// attendanceRouter.use(authMiddleware);
+attendanceRouter.use(authMiddleware);
 
 const attendanceController = new AttendanceController();
 
