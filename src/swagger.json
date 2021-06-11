@@ -105,6 +105,247 @@
           }
         }
       }
+
+
+    },
+    "/attendances/{id}": {
+      "put": {
+        "tags": ["Attendance"],
+        "summary": "Updating a Attendance",
+        "description": "Updating a Attendance",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "schedulingDate": {
+                    "type": "Date"
+                  },
+                  "serviceDate": {
+                    "type": "Date"
+                  },
+                  "serviceTime": {
+                    "type": "Date"
+                  },
+                  "value": {
+                    "type": "string"
+                  },
+                  "client": {
+                    "type": "string"
+                  },
+                  "specialists": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "schedulingDate": "2021-06-11",
+                  "serviceDate": "2021-06-25",
+                  "serviceTime": "2021-06-25 18:30:05",
+                  "value": 100,
+                  "client": "client test",
+                  "specialists": "specialist test",
+                  "status": "SCHEDULED"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Attendance or Client or Specialist Not Found"
+          }
+
+        }
+
+      },
+      "delete": {
+        "tags": ["Attendance"],
+        "summary": "Deleting a Attendance",
+        "description": "Deleting a Attendance",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+
+        }
+      },
+      "get": {
+        "tags": ["Attendance"],
+        "summary": "Consulting a Attendance",
+        "description": "Consulting a Attendance",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+
+        }
+      }
+    },
+    "/attendances/scheduling": {
+      "get": {
+        "tags": ["Attendance"],
+        "summary": "Consult by scheduling date",
+        "description": "Consult by scheduling date",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "schedulingDate": {
+                        "type": "Date"
+                      }
+
+                    },
+                    "example": {
+                      "schedulingDate": "2021-06-11"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+    },
+    "/attendances/service": {
+      "get": {
+        "tags": ["Attendance"],
+        "summary": "Consult by service date",
+        "description": "Consult by service date",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "serviceDate": {
+                        "type": "Date"
+                      }
+                    },
+                    "example": {
+                      "serviceDate": "2021-06-11"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+    },
+    "/attendances/client": {
+      "get": {
+        "tags": ["Attendance"],
+        "summary": "Consult attendances by client",
+        "description": "Consult attendances by client",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "clientId": {
+                        "type": "string"
+                      }
+                    },
+                    "example": {
+                      "clientId": "test"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+    },
+    "/attendances/specialist": {
+      "get": {
+        "tags": ["Attendance"],
+        "summary": "Consult attendances by specialist",
+        "description": "Consult attendances by specialist",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "specialistsId": {
+                        "type": "string"
+                      }
+                    },
+                    "example": {
+                      "specialistsId": "test"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+    },
+    "/attendances/status": {
+      "get": {
+        "tags": ["Attendance"],
+        "summary": "Consult attendances by status",
+        "description": "Consult attendances by status",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "string"
+                      }
+                    },
+                    "example": {
+                      "status": "CANCELED"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
     }
   }
 }
