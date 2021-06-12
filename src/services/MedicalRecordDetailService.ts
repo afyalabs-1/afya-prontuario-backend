@@ -35,7 +35,6 @@ class MedicalRecordDetailService {
     this.medicalRecordRepository = getCustomRepository(MedicalRecordRepository);
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async create({
     dateTime,
     description,
@@ -70,7 +69,6 @@ class MedicalRecordDetailService {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async update({
     id,
     dateTime,
@@ -104,7 +102,6 @@ class MedicalRecordDetailService {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async delete(id: string) {
     const medicalRecordDetail =
       await this.medicalRecordDetailRepository.findOne({
@@ -116,7 +113,6 @@ class MedicalRecordDetailService {
     return medicalRecordDetail;
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async listMedicalRecord(id: []) {
     const medicalRecordDetail = await this.medicalRecordDetailRepository.find({
       medicalRecord: id,
