@@ -45,7 +45,6 @@ class SpecialistService {
   }
 
   async create({
-    id,
     record,
     name,
     phoneNumber,
