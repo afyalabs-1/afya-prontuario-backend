@@ -13,24 +13,6 @@
     "start:docker:dev": "npm install && npm run dev",
     "test": "jest"
   },
-  "jest": {
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
-    ],
-    "transform": {
-      "^.+\\.(ts|tsx)$": "ts-jest"
-    },
-    "globals": {
-      "ts-jest": {
-        "tsConfigFile": "tsconfig.json"
-      }
-    },
-    "testMatch": [
-      "**/test/*.+(ts|tsx|js)"
-    ]
-  },
   "devDependencies": {
     "@jest-mock/express": "^1.4.1",
     "@types/bcrypt": "^5.0.0",
