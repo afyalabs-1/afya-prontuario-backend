@@ -1,11 +1,758 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Afya Challeng - Team 1",
+    "title": "Afya Challeng - Team 1 - O time que a Afya Gama!",
     "description": "Sistema para um consultório controlar o cadastro de seus clientes, atendimentos e prontuário de pacientes",
     "version": "1.0.0"
   },
   "paths": {
+    "/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Create a new Auth",
+        "description": "Create a new Auth",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userName": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "userName": "test",
+                  "password": "test"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "User does not Exist or Authorized"
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Create a new User",
+        "description": "Create a new User",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "role": {
+                    "type": "string"
+                  },
+                  "userName": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "role": "test",
+                  "userName": "test",
+                  "password": "test",
+                  "name": "test"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "404": {
+            "description": "ERROR when create a User!"
+          }
+        }
+      },
+      "get": {
+        "tags": ["User"],
+        "summary": "List User",
+        "description": "List User",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "userName": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clients": {
+      "post": {
+        "tags": ["Client"],
+        "summary": "Create a new Client",
+        "description": "Create a new Client",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cpf": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "phoneNumber": {
+                    "type": "string"
+                  },
+                  "cellPhone": {
+                    "type": "string"
+                  },
+                  "birthDate": {
+                    "type": "Date"
+                  },
+                  "gender": {
+                    "type": "string"
+                  },
+                  "bloodType": {
+                    "type": "string"
+                  },
+                  "profilePictureUrl": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "cpf": "1235698998",
+                  "name": "test",
+                  "email": "teste@teste.com.br",
+                  "phoneNumber": "323223232",
+                  "cellPhone": "98989898989",
+                  "birthDate": "1990-01-01",
+                  "gender": "MALE",
+                  "bloodType": "POSITIVE_A",
+                  "profilePictureUrl": "https://teste.com.br"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "403": {
+            "description": "Client Already Exists"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Client"],
+        "summary": "List Clients",
+        "description": "List Clients",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cpf": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "cpf": "1545454545"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "cpf": {
+                        "type": "string"
+                      }
+
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
+      }
+    },
+    "/clients/{id}": {
+      "put": {
+        "tags": ["Client"],
+        "summary": "Updating a Client",
+        "description": "Updating a Client",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cpf": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "phoneNumber": {
+                    "type": "string"
+                  },
+                  "cellPhone": {
+                    "type": "string"
+                  },
+                  "birthDate": {
+                    "type": "Date"
+                  },
+                  "gender": {
+                    "type": "string"
+                  },
+                  "bloodType": {
+                    "type": "string"
+                  },
+                  "profilePictureUrl": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "cpf": "1235698998",
+                  "name": "test",
+                  "email": "teste@teste.com.br",
+                  "phoneNumber": "323223232",
+                  "cellPhone": "98989898989",
+                  "birthDate": "1990-01-01",
+                  "gender": "MALE",
+                  "bloodType": "POSITIVE_A",
+                  "profilePictureUrl": "https://teste.com.br"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "501": {
+            "description": "ERROR Could not update Client!"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Client"],
+        "summary": "Deleting a Client",
+        "description": "Deleting a Client",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/address": {
+      "post": {
+        "tags": ["Address"],
+        "summary": "Create a new Address",
+        "description": "Create a new Address",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string"
+                  },
+                  "street": {
+                    "type": "string"
+                  },
+                  "number": {
+                    "type": "string"
+                  },
+                  "complement": {
+                    "type": "string"
+                  },
+                  "district": {
+                    "type": "string"
+                  },
+                  "city": {
+                    "type": "string"
+                  },
+                  "state": {
+                    "type": "string"
+                  },
+                  "postalCode": {
+                    "type": "string"
+                  },
+                  "clients": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "kind": "teste",
+                  "street": "teste",
+                  "number": "1",
+                  "complement": "teste",
+                  "district": "teste",
+                  "city": "teste",
+                  "state": "teste",
+                  "postalCode": "1515",
+                  "clients": "teste"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "404": {
+            "description": "Address Not Found"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Address"],
+        "summary": "List Address",
+        "description": "List Address",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "clients": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "clients": "teste"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "clients": {
+                        "type": "string"
+                      }
+
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
+      }
+    },
+    "/address/{id}": {
+      "put": {
+        "tags": ["Address"],
+        "summary": "Updating a Address",
+        "description": "Updating a Address",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string"
+                  },
+                  "street": {
+                    "type": "string"
+                  },
+                  "number": {
+                    "type": "string"
+                  },
+                  "complement": {
+                    "type": "string"
+                  },
+                  "district": {
+                    "type": "string"
+                  },
+                  "city": {
+                    "type": "string"
+                  },
+                  "state": {
+                    "type": "string"
+                  },
+                  "postalCode": {
+                    "type": "string"
+                  },
+                  "clients": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "kind": "teste",
+                  "street": "teste",
+                  "number": "1",
+                  "complement": "teste",
+                  "district": "teste",
+                  "city": "teste",
+                  "state": "teste",
+                  "postalCode": "1515",
+                  "clients": "teste"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "501": {
+            "description": "ERROR Could not update Address!"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Address"],
+        "summary": "Deleting a Address",
+        "description": "Deleting a Address",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+
+    "/specialists": {
+      "post": {
+        "tags": ["Specialist"],
+        "summary": "Create a new Specialist",
+        "description": "Create a new Specialist",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "record": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "phoneNumber": {
+                    "type": "string"
+                  },
+                  "cellPhone": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "profession": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "record": "test",
+                  "name": "test",
+                  "phoneNumber": "262626262",
+                  "cellPhone": "9988988999",
+                  "email": "teste@teste.com.br",
+                  "profession": "test"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Specialist"],
+        "summary": "List Specialist",
+        "description": "List Specialist",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "specialistName": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "specialistName": "teste"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "clients": {
+                        "type": "string"
+                      }
+
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
+      }
+    },
+    "/specialists/{id}": {
+      "put": {
+        "tags": ["Specialist"],
+        "summary": "Updating a Specialist",
+        "description": "Updating a Specialist",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "record": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "phoneNumber": {
+                    "type": "string"
+                  },
+                  "cellPhone": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "profession": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "record": "test",
+                  "name": "test",
+                  "phoneNumber": "262626262",
+                  "cellPhone": "9988988999",
+                  "email": "teste@teste.com.br",
+                  "profession": "test"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Specialist Not Found!"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Specialist"],
+        "summary": "Deleting a Specialist",
+        "description": "Deleting a Specialist",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+
+    "/professions": {
+      "post": {
+        "tags": ["Profission"],
+        "summary": "Create a new Profission",
+        "description": "Create a new Profission",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "test"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "404": {
+            "description": "Profession not found"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Profission"],
+        "summary": "List Profission",
+        "description": "List Profission",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "teste"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "clients": {
+                        "type": "string"
+                      }
+
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
+      }
+    },
+    "/professions/{id}": {
+      "put": {
+        "tags": ["Profission"],
+        "summary": "Updating a Profission",
+        "description": "Updating a Profission",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "test"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Profission Not Found!"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Profission"],
+        "summary": "Deleting a Profission",
+        "description": "Deleting a Profission",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/attendances": {
       "post": {
         "tags": ["Attendance"],
@@ -59,7 +806,6 @@
           "404": {
             "description": "Client or Specialist Not Found"
           }
-
         }
       },
       "get": {
@@ -105,8 +851,6 @@
           }
         }
       }
-
-
     },
     "/attendances/{id}": {
       "put": {
@@ -164,9 +908,7 @@
           "404": {
             "description": "Attendance or Client or Specialist Not Found"
           }
-
         }
-
       },
       "delete": {
         "tags": ["Attendance"],
@@ -176,7 +918,6 @@
           "200": {
             "description": "Success"
           }
-
         }
       },
       "get": {
@@ -187,7 +928,6 @@
           "200": {
             "description": "Success"
           }
-
         }
       }
     },
@@ -209,7 +949,6 @@
                       "schedulingDate": {
                         "type": "Date"
                       }
-
                     },
                     "example": {
                       "schedulingDate": "2021-06-11"
@@ -221,7 +960,6 @@
           }
         }
       }
-
     },
     "/attendances/service": {
       "get": {
@@ -252,7 +990,6 @@
           }
         }
       }
-
     },
     "/attendances/client": {
       "get": {
@@ -283,7 +1020,6 @@
           }
         }
       }
-
     },
     "/attendances/specialist": {
       "get": {
@@ -314,7 +1050,6 @@
           }
         }
       }
-
     },
     "/attendances/status": {
       "get": {
@@ -346,6 +1081,151 @@
         }
       }
 
+    },
+    "/medicalrecord": {
+      "post": {
+        "tags": ["Medical Record"],
+        "summary": "Create a new Medical Record",
+        "description": "Create a new Medical Record",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "dateTime": {
+                    "type": "Date"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "specialists": {
+                    "type": "string"
+                  },
+                  "attendance": {
+                    "type": "string"
+                  },
+                  "medicalRecord": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "medicalRecord": "eKKhcbMtwkBEC9_v",
+                  "dateTime": "2021-06-11",
+                  "description": "Test Medical Record",
+                  "specialists": "TESTE5",
+                  "attendance": "27tWv-f6M9kWCsn2"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Medical Record"],
+        "summary": "List Medical Record Detail",
+        "description": "List Medical Record Detail",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "medicalRecord": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "medicalRecord": "eKKhcbMtwkBEC9_v"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "medicalRecord": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/medicalrecord/{id}": {
+      "put": {
+        "tags": ["Medical Record"],
+        "summary": "Updating a Medical Record Detail",
+        "description": "Updating a Medical Record Detail",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "dateTime": {
+                    "type": "Date"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "specialists": {
+                    "type": "string"
+                  },
+                  "attendance": {
+                    "type": "string"
+                  },
+                  "medicalRecord": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "dateTime": "2021-06-10",
+                  "description": "DESCRICAO TESTE ",
+                  "specialists": "TESTE5",
+                  "attendance": "27tWv-f6M9kWCsn2",
+                  "medicalRecord": "eKKhcbMtwkBEC9_v"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Medical Record Detail Not Found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Medical Record"],
+        "summary": "Deleting a Medical Record Detail",
+        "description": "Deleting a Medical Record Detail",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
     }
   }
 }
