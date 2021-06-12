@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Afya Challeng - Team 1",
+    "title": "Afya Challeng - Team 1 - O time que a Afya Gama!",
     "description": "Sistema para um consultório controlar o cadastro de seus clientes, atendimentos e prontuário de pacientes",
     "version": "1.0.0"
   },

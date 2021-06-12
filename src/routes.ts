@@ -15,7 +15,7 @@ const router = Router();
 
 router.get('/', (request, response) => {
   return response.json({
-    message: `Afya Challenge - Team 1 - Port - ${process.env.API_PORT}`,
+    message: `Afya Challenge - Team 1 - O Time que a Afya Gama`,
   });
 });
 
