@@ -475,7 +475,6 @@
         }
       }
     },
-
     "/specialists": {
       "post": {
         "tags": ["Specialist"],
@@ -634,7 +633,6 @@
         }
       }
     },
-
     "/professions": {
       "post": {
         "tags": ["Profission"],
@@ -1093,6 +1091,97 @@
               "schema": {
                 "type": "object",
                 "properties": {
+                  "openDate": {
+                    "type": "Date"
+                  },
+                  "client": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "openDate": "2021-06-11",
+                  "client": "TESTE"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Error when registering Medical Record"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Medical Record"],
+        "summary": "List Medical Record",
+        "description": "List Medical Record",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "id": "gwpxMj0zLFH5IYyN"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "medicalRecord": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+    },
+    "/medicalrecord/{id}": {
+      "delete": {
+        "tags": ["Medical Record"],
+        "summary": "Deleting a Medical Record",
+        "description": "Deleting a Medical Record",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/medicalrecorddetail": {
+      "post": {
+        "tags": ["Medical Record Detail"],
+        "summary": "Create a new Medical Record Detail",
+        "description": "Create a new Medical Record Detail",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
                   "dateTime": {
                     "type": "Date"
                   },
@@ -1127,7 +1216,7 @@
         }
       },
       "get": {
-        "tags": ["Medical Record"],
+        "tags": ["Medical Record Detail"],
         "summary": "List Medical Record Detail",
         "description": "List Medical Record Detail",
         "requestBody": {
@@ -1169,9 +1258,9 @@
         }
       }
     },
-    "/medicalrecord/{id}": {
+    "/medicalrecorddetail/{id}": {
       "put": {
-        "tags": ["Medical Record"],
+        "tags": ["Medical Record Detail"],
         "summary": "Updating a Medical Record Detail",
         "description": "Updating a Medical Record Detail",
         "requestBody": {
@@ -1217,7 +1306,7 @@
         }
       },
       "delete": {
-        "tags": ["Medical Record"],
+        "tags": ["Medical Record Detail"],
         "summary": "Deleting a Medical Record Detail",
         "description": "Deleting a Medical Record Detail",
         "responses": {

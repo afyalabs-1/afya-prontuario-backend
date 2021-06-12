@@ -36,7 +36,6 @@ class AttendancesService {
   }
 
   // Validando Cliente e Especialista
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async relationIsValid(identify: string, relation: string) {
     if (relation.toUpperCase() === 'CLIENT') {
       const clientId = identify;
@@ -54,28 +53,6 @@ class AttendancesService {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  async createMedicalRecord(client: []) {
-    // Verifico se o Cliente já tem Prontuario
-    const clientId = client.toString();
-
-    const medicalRecordExists = await this.medicalRecordRepository.findOne({
-      where: { client: clientId },
-    });
-
-    if (!medicalRecordExists) {
-      const openDate = new Date();
-
-      const medicalRecord = this.medicalRecordRepository.create({
-        client,
-        openDate,
-      });
-
-      await this.medicalRecordRepository.save(medicalRecord);
-    }
-  }
-
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async create({
     schedulingDate,
     serviceDate,
@@ -131,7 +108,6 @@ class AttendancesService {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async listScheduling(schedulingDate: Date) {
     const attendance = await this.attendanceRepository.find({
       schedulingDate,
@@ -140,7 +116,6 @@ class AttendancesService {
     return attendance;
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async listService(serviceDate: Date) {
     const attendance = await this.attendanceRepository.find({
       serviceDate,
@@ -149,7 +124,6 @@ class AttendancesService {
     return attendance;
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async listClient(clientId: []) {
     const attendance = await this.attendanceRepository.find({
       client: clientId,
@@ -158,7 +132,6 @@ class AttendancesService {
     return attendance;
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async listSpecialist(specialistsId: []) {
     const attendance = await this.attendanceRepository.find({
       specialists: specialistsId,
@@ -167,7 +140,6 @@ class AttendancesService {
     return attendance;
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async listStatus(status: string) {
     const attendance = await this.attendanceRepository.find({
       status,
@@ -176,7 +148,6 @@ class AttendancesService {
     return attendance;
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async listId(id: string) {
     const attendance = await this.attendanceRepository.findOne({
       id,
@@ -189,7 +160,6 @@ class AttendancesService {
     return attendance;
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async update({
     id,
     schedulingDate,
@@ -238,11 +208,6 @@ class AttendancesService {
 
         await this.attendanceRepository.save(attendance);
 
-        // Quando o Status for REALIZADO (ACCOMPLISHED), criar o Prontuário
-        if (status.toUpperCase() === 'ACCOMPLISHED') {
-          await this.createMedicalRecord(client);
-        }
-
         const attendanceNow = await this.attendanceRepository.findOne({
           id,
         });
@@ -252,7 +217,6 @@ class AttendancesService {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async delete(id: string) {
     const attendance = await this.attendanceRepository.findOne({
       id,
@@ -267,7 +231,6 @@ class AttendancesService {
     return attendance;
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async listAll() {
     const attendance = await this.attendanceRepository.find();
     return attendance;
