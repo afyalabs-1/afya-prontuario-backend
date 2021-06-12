@@ -9,7 +9,7 @@ specialistRouter.use(authMiddleware);
 
 specialistRouter.get('/', specialistController.listAll);
 specialistRouter.post('/', specialistController.create);
-specialistRouter.post('/update', specialistController.update);
-specialistRouter.post('/delete', specialistController.delete);
+specialistRouter.put('/', specialistController.update);
+specialistRouter.delete('/', specialistController.delete);
 
 export { specialistRouter };

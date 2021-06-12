@@ -9,7 +9,7 @@ professionRouter.use(authMiddleware);
 
 professionRouter.get('/', professionController.listAll);
 professionRouter.post('/', professionController.create);
-professionRouter.post('/update', professionController.update);
-professionRouter.post('/delete', professionController.delete);
+professionRouter.put('/', professionController.update);
+professionRouter.delete('/', professionController.delete);
 
 export { professionRouter };
