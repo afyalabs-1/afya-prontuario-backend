@@ -70,10 +70,9 @@ export class Client extends BaseEntity<Client> {
   @Column({ type: 'enum', enum: BloodTypes, nullable: false })
   bloodType: BloodTypes;
 
-  @IsOptional({ always: true })
-  @IsUrl({}, { always: true })
+  @IsString({ always: true })
   @Column({ type: 'varchar', nullable: true })
-  profilePictureUrl?: string;
+  profilePictureUrl: string;
 
   @ManyToMany(type => Address, address => address.clients, {
     cascade: true,
