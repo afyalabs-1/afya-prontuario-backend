@@ -10,10 +10,7 @@ class ProfessionController {
       var professions = await professionService.listAll(professionName); 
       
       if (professions) {
-        return response.json({
-          statusCode: 200,
-          professions: professions
-        });
+        return response.send(professions);
       } else {
         return new AppError(
           404,
