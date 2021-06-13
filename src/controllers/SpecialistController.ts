@@ -5,15 +5,12 @@ import { AppError } from '../error/AppError';
 class SpecialistController {
     async listAll(request: Request, response: Response) {
         try {
-            var specialistName = (request.query as any).name;
+            var specialistName = (request.body as any).name;
             var specialistService = new SpecialistService();
             var specialists = await specialistService.listAll(specialistName);
 
             if (specialists) {
-                return response.json({
-                    statusCode: 200,
-                    specialists: specialists
-                })
+                return response.send(specialists);
             } else {
                 return new AppError(
                     404,
@@ -54,11 +51,7 @@ class SpecialistController {
             });
 
             if (createdSpecialist) {
-                return response.json({
-                    statusCode: 201,
-                    message: `Specialist ${name} created!`,
-                    log: 'Success > SpecialistService > create()'
-                })
+                return response.send(createdSpecialist)
             }
         } catch (error) {
             throw new AppError(

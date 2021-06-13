@@ -37,11 +37,7 @@ class ProfessionController {
       var createdProfession = await professionService.create(name);
 
       if (createdProfession) {
-        return response.json({
-          statusCode: 201,
-          message: `Profession ${name} created!`,
-          log: 'Success > ProfessionController > create'
-        });
+        return response.send(createdProfession);
       }
     } catch (err) {
       throw new AppError(
