@@ -1,9 +1,7 @@
-import { getCustomRepository, Repository, Like } from 'typeorm';
-import { Specialists } from '../models/specialists';
+import { getCustomRepository, Like, Repository } from 'typeorm';
+import { AppError } from '../error/AppError';
 import { Profession } from '../models/profession';
 import { SpecialistRepository } from '../repositories/SpecialistRepository';
-import { AppError } from '../error/AppError';
-import { Request, Response } from 'express';
 
 interface ISpecialist {
   id: string;
