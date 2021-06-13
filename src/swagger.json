@@ -26,7 +26,7 @@
                 },
                 "example": {
                   "userName": "test",
-                  "password": "test"
+                  "password": "123456"
                 }
               }
             }
@@ -67,9 +67,9 @@
                   }
                 },
                 "example": {
-                  "role": "test",
+                  "role": "USER",
                   "userName": "test",
-                  "password": "test",
+                  "password": "123456",
                   "name": "test"
                 }
               }
@@ -158,7 +158,7 @@
                   "cellPhone": "98989898989",
                   "birthDate": "1990-01-01",
                   "gender": "MALE",
-                  "bloodType": "POSITIVE_A",
+                  "bloodType": "A_POSITIVE",
                   "profilePictureUrl": "https://teste.com.br"
                 }
               }
@@ -266,7 +266,7 @@
                   "cellPhone": "98989898989",
                   "birthDate": "1990-01-01",
                   "gender": "MALE",
-                  "bloodType": "POSITIVE_A",
+                  "bloodType": "A_POSITIVE",
                   "profilePictureUrl": "https://teste.com.br"
                 }
               }
@@ -340,7 +340,7 @@
                   "district": "teste",
                   "city": "teste",
                   "state": "teste",
-                  "postalCode": "1515",
+                  "postalCode": "19900-000",
                   "clients": "teste"
                 }
               }
@@ -448,7 +448,7 @@
                   "district": "teste",
                   "city": "teste",
                   "state": "teste",
-                  "postalCode": "1515",
+                  "postalCode": "19914-080",
                   "clients": "teste"
                 }
               }
@@ -475,7 +475,6 @@
         }
       }
     },
-
     "/specialists": {
       "post": {
         "tags": ["Specialist"],
@@ -487,7 +486,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "record": {
+                  "crm": {
                     "type": "string"
                   },
                   "name": {
@@ -507,7 +506,7 @@
                   }
                 },
                 "example": {
-                  "record": "test",
+                  "crm": "test",
                   "name": "test",
                   "phoneNumber": "262626262",
                   "cellPhone": "9988988999",
@@ -583,7 +582,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "record": {
+                  "crm": {
                     "type": "string"
                   },
                   "name": {
@@ -603,7 +602,7 @@
                   }
                 },
                 "example": {
-                  "record": "test",
+                  "crm": "test",
                   "name": "test",
                   "phoneNumber": "262626262",
                   "cellPhone": "9988988999",
@@ -634,7 +633,6 @@
         }
       }
     },
-
     "/professions": {
       "post": {
         "tags": ["Profission"],
@@ -1093,6 +1091,97 @@
               "schema": {
                 "type": "object",
                 "properties": {
+                  "openDate": {
+                    "type": "Date"
+                  },
+                  "client": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "openDate": "2021-06-11",
+                  "client": "TESTE"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Error when registering Medical Record"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Medical Record"],
+        "summary": "List Medical Record",
+        "description": "List Medical Record",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "id": "gwpxMj0zLFH5IYyN"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "medicalRecord": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+    },
+    "/medicalrecord/{id}": {
+      "delete": {
+        "tags": ["Medical Record"],
+        "summary": "Deleting a Medical Record",
+        "description": "Deleting a Medical Record",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/medicalrecorddetail": {
+      "post": {
+        "tags": ["Medical Record Detail"],
+        "summary": "Create a new Medical Record Detail",
+        "description": "Create a new Medical Record Detail",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
                   "dateTime": {
                     "type": "Date"
                   },
@@ -1127,7 +1216,7 @@
         }
       },
       "get": {
-        "tags": ["Medical Record"],
+        "tags": ["Medical Record Detail"],
         "summary": "List Medical Record Detail",
         "description": "List Medical Record Detail",
         "requestBody": {
@@ -1169,9 +1258,9 @@
         }
       }
     },
-    "/medicalrecord/{id}": {
+    "/medicalrecorddetail/{id}": {
       "put": {
-        "tags": ["Medical Record"],
+        "tags": ["Medical Record Detail"],
         "summary": "Updating a Medical Record Detail",
         "description": "Updating a Medical Record Detail",
         "requestBody": {
@@ -1217,7 +1306,7 @@
         }
       },
       "delete": {
-        "tags": ["Medical Record"],
+        "tags": ["Medical Record Detail"],
         "summary": "Deleting a Medical Record Detail",
         "description": "Deleting a Medical Record Detail",
         "responses": {

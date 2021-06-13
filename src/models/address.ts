@@ -85,6 +85,15 @@ export class Address extends BaseEntity<Address> {
   @Column({ type: 'varchar', nullable: false })
   postalCode: string;
 
-  @ManyToOne(type => Client, client => client.addresses)
+  @ManyToOne(type => Client, client => client.addresses, {
+    cascade: true,
+    eager: true,
+  })
   clients: Client[];
+
+  @ManyToOne(type => Client, client => client.addresses, {
+    cascade: true,
+    eager: true,
+  })
+  specialists: Client[];
 }

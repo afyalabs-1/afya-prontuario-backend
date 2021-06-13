@@ -10,7 +10,14 @@ import {
   Length,
   MaxLength,
 } from 'class-validator';
-import { Column, Entity, JoinTable, ManyToMany, OneToMany } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  JoinTable,
+  ManyToMany,
+  OneToMany,
+} from 'typeorm';
 import { Address } from './address';
 import { BaseEntity } from './base_entity';
 
@@ -74,11 +81,8 @@ export class Client extends BaseEntity<Client> {
   @Column({ type: 'varchar', nullable: true })
   profilePictureUrl: string;
 
-  @ManyToMany(type => Address, address => address.clients, {
-    cascade: true,
-    eager: true,
-  })
-  @JoinTable()
+  @OneToMany(type => Address, address => address.clients)
+  @JoinColumn()
   addresses: Address[];
 
   @OneToMany(() => Attendance, attendance => attendance.client)
