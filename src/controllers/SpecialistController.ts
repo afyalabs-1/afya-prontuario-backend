@@ -32,13 +32,13 @@ class SpecialistController {
 
   async create(request: Request, response: Response) {
     try {
-      const { id, record, name, phoneNumber, cellPhone, email, profession } =
+      const { id, crm, name, phoneNumber, cellPhone, email, profession } =
         request.body;
 
       const specialistService = new SpecialistService();
       const createdSpecialist = await specialistService.create({
         id,
-        record,
+        crm,
         name,
         phoneNumber,
         cellPhone,
@@ -64,13 +64,13 @@ class SpecialistController {
 
   async update(request: Request, response: Response) {
     try {
-      const { id, record, name, phoneNumber, cellPhone, email, profession } =
+      const { id, crm, name, phoneNumber, cellPhone, email, profession } =
         request.body;
 
       const specialistService = new SpecialistService();
       const updatedSpecialist = await specialistService.update({
         id,
-        record,
+        crm,
         name,
         phoneNumber,
         cellPhone,

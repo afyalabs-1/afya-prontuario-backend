@@ -7,7 +7,7 @@ import { Request, Response } from 'express';
 
 interface ISpecialist {
   id: string;
-  record: string;
+  crm: string;
   name: string;
   phoneNumber: string;
   cellPhone: string;
@@ -46,7 +46,7 @@ class SpecialistService {
 
   async create({
     id,
-    record,
+    crm,
     name,
     phoneNumber,
     cellPhone,
@@ -54,7 +54,7 @@ class SpecialistService {
     profession,
   }: ISpecialist) {
     const specialist = this.specialistRepository.create({
-      record,
+      crm,
       name,
       phoneNumber,
       cellPhone,
@@ -77,7 +77,7 @@ class SpecialistService {
 
   async update({
     id,
-    record,
+    crm,
     name,
     phoneNumber,
     cellPhone,
@@ -86,7 +86,7 @@ class SpecialistService {
   }: ISpecialist) {
     return this.specialistRepository.save({
       id,
-      record,
+      crm,
       name,
       phoneNumber,
       cellPhone,

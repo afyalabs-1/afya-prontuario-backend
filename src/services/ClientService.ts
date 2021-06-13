@@ -75,7 +75,6 @@ class ClientService {
         const clients = await this.clientRepository.find({
           relations: ['addresses'],
         });
-        // clientsList = await clientsRepository.find({ relations: ['address'] });
         return clients;
       }
     } catch {
