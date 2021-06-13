@@ -86,14 +86,14 @@ export class Address extends BaseEntity<Address> {
   postalCode: string;
 
   @ManyToOne(type => Client, client => client.addresses, {
-    cascade: true,
-    eager: true,
+    eager: false,
+    onDelete: 'CASCADE',
   })
   clients: Client[];
 
   @ManyToOne(type => Client, client => client.addresses, {
-    cascade: true,
-    eager: true,
+    eager: false,
+    onDelete: 'CASCADE',
   })
   specialists: Client[];
 }

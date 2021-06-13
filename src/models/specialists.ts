@@ -39,7 +39,8 @@ export class Specialists extends BaseEntity<Specialists> {
   )
   medicalRecordDetail: MedicalRecordDetail[];
 
-  @OneToMany(type => Address, address => address.specialists)
-  @JoinColumn()
+  @OneToMany(type => Address, address => address.specialists, {
+    eager: true,
+  })
   addresses: Address[];
 }

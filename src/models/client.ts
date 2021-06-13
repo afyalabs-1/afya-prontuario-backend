@@ -1,24 +1,14 @@
-import { Attendance } from './attendance';
-
 import {
   IsEmail,
   IsEnum,
   IsISO8601,
-  IsOptional,
   IsString,
-  IsUrl,
   Length,
   MaxLength,
 } from 'class-validator';
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  JoinTable,
-  ManyToMany,
-  OneToMany,
-} from 'typeorm';
+import { Column, Entity, JoinColumn, OneToMany } from 'typeorm';
 import { Address } from './address';
+import { Attendance } from './attendance';
 import { BaseEntity } from './base_entity';
 
 export class Gender {
@@ -81,8 +71,9 @@ export class Client extends BaseEntity<Client> {
   @Column({ type: 'varchar', nullable: true })
   profilePictureUrl: string;
 
-  @OneToMany(type => Address, address => address.clients)
-  @JoinColumn()
+  @OneToMany(type => Address, address => address.clients, {
+    eager: true,
+  })
   addresses: Address[];
 
   @OneToMany(() => Attendance, attendance => attendance.client)
