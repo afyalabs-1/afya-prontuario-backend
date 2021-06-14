@@ -130,6 +130,7 @@ class AttendancesService {
   async listClient(clientId: string) {
     const attendance = await this.attendanceRepository.find({
       where: { client: clientId },
+      relations: ['specialists'],
     });
 
     return attendance;
