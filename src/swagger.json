@@ -779,6 +779,9 @@
                   },
                   "status": {
                     "type": "string"
+                  },
+                  "details": {
+                    "type": "string"
                   }
                 },
                 "example": {
@@ -787,7 +790,8 @@
                   "value": 100,
                   "client": "client test",
                   "specialists": "specialist test",
-                  "status": "SCHEDULED"
+                  "status": "SCHEDULED",
+                  "details": "teste"
                 }
               }
             }
@@ -877,6 +881,9 @@
                   },
                   "status": {
                     "type": "string"
+                  },
+                  "details": {
+                    "type": "string"
                   }
                 },
                 "example": {
@@ -885,7 +892,8 @@
                   "value": 100,
                   "client": "client test",
                   "specialists": "specialist test",
-                  "status": "SCHEDULED"
+                  "status": "SCHEDULED",
+                  "details": "teste"
                 }
               }
             }
