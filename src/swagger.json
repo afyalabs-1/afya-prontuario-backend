@@ -762,9 +762,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "schedulingDate": {
-                    "type": "Date"
-                  },
                   "serviceDate": {
                     "type": "Date"
                   },
@@ -785,9 +782,8 @@
                   }
                 },
                 "example": {
-                  "schedulingDate": "2021-06-11",
-                  "serviceDate": "2021-06-25",
-                  "serviceTime": "2021-06-25 18:30:05",
+                  "serviceDate": "2021-06-25 18:00:00",
+                  "serviceTime": "2021-06-25 18:00:00",
                   "value": 100,
                   "client": "client test",
                   "specialists": "specialist test",
@@ -864,9 +860,6 @@
                   "id": {
                     "type": "string"
                   },
-                  "schedulingDate": {
-                    "type": "Date"
-                  },
                   "serviceDate": {
                     "type": "Date"
                   },
@@ -887,9 +880,8 @@
                   }
                 },
                 "example": {
-                  "schedulingDate": "2021-06-11",
-                  "serviceDate": "2021-06-25",
-                  "serviceTime": "2021-06-25 18:30:05",
+                  "serviceDate": "2021-06-25 18:00:00",
+                  "serviceTime": "2021-06-25 18:00:00",
                   "value": 100,
                   "client": "client test",
                   "specialists": "specialist test",
