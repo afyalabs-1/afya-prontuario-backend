@@ -133,12 +133,12 @@ class AttendanceController {
   }
 
   async listClient(request: Request, response: Response): Promise<Response> {
-    const { clientId } = request.body;
+    const { id } = request.params;
 
     const attendanceService = new AttendancesService();
 
     try {
-      const attendance = await attendanceService.listClient(clientId);
+      const attendance = await attendanceService.listClient(id);
 
       return response.json(attendance);
     } catch (error) {
