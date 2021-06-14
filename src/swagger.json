@@ -989,7 +989,7 @@
         }
       }
     },
-    "/attendances/client": {
+    "/attendances/client/{id}": {
       "get": {
         "tags": ["Attendance"],
         "summary": "Consult attendances by client",
