@@ -232,7 +232,10 @@ class AttendancesService {
   }
 
   async listAll() {
-    const attendance = await this.attendanceRepository.find();
+    const attendance = await this.attendanceRepository.find({
+      relations: ['client', 'specialists'],
+    });
+
     return attendance;
   }
 }
