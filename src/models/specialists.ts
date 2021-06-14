@@ -1,5 +1,5 @@
 import { Profession } from './profession';
-import { IsEmail, IsOptional, Length } from 'class-validator';
+import { IsEmail, IsOptional, IsString, Length } from 'class-validator';
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { BaseEntity } from './base_entity';
 import { Attendance } from './attendance';
@@ -26,6 +26,10 @@ export class Specialists extends BaseEntity<Specialists> {
   @IsEmail({}, { always: true })
   @Column({ type: 'varchar', length: 255, unique: true })
   email: string;
+
+  @IsString({ always: true })
+  @Column({ type: 'varchar', nullable: true })
+  profilePictureUrl: string;
 
   @ManyToOne(() => Profession, profession => profession.specialist)
   profession: Profession;

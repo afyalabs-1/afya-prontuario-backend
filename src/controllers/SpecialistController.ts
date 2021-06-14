@@ -29,8 +29,16 @@ class SpecialistController {
 
   async create(request: Request, response: Response) {
     try {
-      const { id, crm, name, phoneNumber, cellPhone, email, profession } =
-        request.body;
+      const {
+        id,
+        crm,
+        name,
+        phoneNumber,
+        cellPhone,
+        email,
+        profession,
+        profilePictureUrl,
+      } = request.body;
 
       const specialistService = new SpecialistService();
       const createdSpecialist = await specialistService.create({
@@ -41,6 +49,7 @@ class SpecialistController {
         cellPhone,
         email,
         profession,
+        profilePictureUrl,
       });
 
       if (createdSpecialist) {
@@ -57,8 +66,16 @@ class SpecialistController {
 
   async update(request: Request, response: Response) {
     try {
-      const { id, crm, name, phoneNumber, cellPhone, email, profession } =
-        request.body;
+      const {
+        id,
+        crm,
+        name,
+        phoneNumber,
+        cellPhone,
+        email,
+        profession,
+        profilePictureUrl,
+      } = request.body;
 
       const specialistService = new SpecialistService();
       const updatedSpecialist = await specialistService.update({
@@ -69,6 +86,7 @@ class SpecialistController {
         cellPhone,
         email,
         profession,
+        profilePictureUrl,
       });
 
       if (updatedSpecialist) {

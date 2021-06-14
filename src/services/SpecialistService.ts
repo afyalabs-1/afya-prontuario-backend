@@ -11,6 +11,7 @@ interface ISpecialist {
   cellPhone: string;
   email: string;
   profession: Profession;
+  profilePictureUrl: string;
 }
 
 class SpecialistService {
@@ -50,6 +51,7 @@ class SpecialistService {
     cellPhone,
     email,
     profession,
+    profilePictureUrl,
   }: ISpecialist) {
     const specialist = this.specialistRepository.create({
       crm,
@@ -58,6 +60,7 @@ class SpecialistService {
       cellPhone,
       email,
       profession,
+      profilePictureUrl,
     });
 
     const createdSpecialist = this.specialistRepository.save(specialist);
@@ -81,6 +84,7 @@ class SpecialistService {
     cellPhone,
     email,
     profession,
+    profilePictureUrl,
   }: ISpecialist) {
     return this.specialistRepository.save({
       id,
@@ -90,6 +94,7 @@ class SpecialistService {
       cellPhone,
       email,
       profession,
+      profilePictureUrl,
     });
   }
 
