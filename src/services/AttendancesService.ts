@@ -17,6 +17,7 @@ interface IAttendance {
   serviceDate: Date;
   serviceTime: Date;
   value: string;
+  details: string;
   client: [];
   specialists: [];
   status: string;
@@ -58,6 +59,7 @@ class AttendancesService {
     serviceDate,
     serviceTime,
     value,
+    details,
     client,
     specialists,
     status,
@@ -97,6 +99,7 @@ class AttendancesService {
         serviceDate,
         serviceTime,
         value,
+        details,
         client,
         specialists,
         status,
@@ -166,6 +169,7 @@ class AttendancesService {
     serviceDate,
     serviceTime,
     value,
+    details,
     status,
     client,
     specialists,
@@ -204,6 +208,7 @@ class AttendancesService {
         attendance.value = value;
         attendance.specialists = specialists;
         attendance.client = client;
+        attendance.details = details;
         attendance.status = status.toUpperCase();
 
         await this.attendanceRepository.save(attendance);

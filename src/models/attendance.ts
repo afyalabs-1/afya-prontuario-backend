@@ -29,6 +29,9 @@ export class Attendance extends BaseEntity<Attendance> {
   @Column({ nullable: true })
   value: string;
 
+  @Column({ nullable: true })
+  details: string;
+
   @Column({ type: 'enum', enum: Status, nullable: true })
   status: Status;
 

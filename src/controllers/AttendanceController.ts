@@ -4,8 +4,15 @@ import { AttendancesService } from '../services/AttendancesService';
 
 class AttendanceController {
   async create(request: Request, response: Response): Promise<Response> {
-    const { serviceDate, serviceTime, value, client, specialists, status } =
-      request.body;
+    const {
+      serviceDate,
+      serviceTime,
+      value,
+      client,
+      specialists,
+      status,
+      details,
+    } = request.body;
 
     // Checando se a data de agendamento é menor que a data atual
     const hourStart = startOfHour(parseISO(serviceDate));
@@ -22,6 +29,7 @@ class AttendanceController {
       serviceDate,
       serviceTime,
       value,
+      details,
       status,
       client,
       specialists,
@@ -39,8 +47,15 @@ class AttendanceController {
   async update(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
-    const { serviceDate, serviceTime, value, client, specialists, status } =
-      request.body;
+    const {
+      serviceDate,
+      serviceTime,
+      value,
+      client,
+      specialists,
+      status,
+      details,
+    } = request.body;
 
     // Checando se a data de agendamento é menor que a data atual
     const hourStart = startOfHour(parseISO(serviceDate));
@@ -58,6 +73,7 @@ class AttendanceController {
         serviceDate,
         serviceTime,
         value,
+        details,
         client,
         specialists,
         status,
