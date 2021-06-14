@@ -13,7 +13,7 @@ attendanceRouter.post('/', attendanceController.create);
 attendanceRouter.get('/', attendanceController.listAll);
 attendanceRouter.get('/scheduling/', attendanceController.listScheduling);
 attendanceRouter.get('/service/', attendanceController.listService);
-attendanceRouter.get('/client/', attendanceController.listClient);
+attendanceRouter.get('/client/:id', attendanceController.listClient);
 attendanceRouter.get('/specialist/', attendanceController.listSpecialist);
 attendanceRouter.get('/status/', attendanceController.listStatus);
 attendanceRouter.get('/:id', attendanceController.listId);
