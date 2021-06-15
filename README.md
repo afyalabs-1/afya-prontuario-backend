@@ -56,3 +56,6 @@ A criação das tabelas do banco de dados é feita pelas migrantions, para rodar
     npm run typeorm migration:run
 
 
+Para levantar o servidor basta digitar o código a seguir para compilar as imagens e levantar os containers.
+
+    docker-compose-up  
